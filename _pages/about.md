@@ -1,6 +1,6 @@
 ---
 permalink: /
-title: "I am seeking a PhD position. If you are interested please contact me.🤗"
+title: "I am seeking a PhD position. If you are interested in me, please kindly reach out 🤗."
 excerpt: "About me"
 author_profile: true
 redirect_from: 
