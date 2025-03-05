@@ -1,6 +1,6 @@
 ---
 permalink: /
-title: "If you are interested in my work, please kindly reach out 🤗."
+title: "I am a bit lazy, so I don’t maintain a personal homepage. If you want to know my papers, please visit my [Google Scholar Homepage](https://scholar.google.com/citations?user=Vm1moSIAAAAJ&hl=zh-CN). If you are interested in my work, please kindly reach out 🤗."
 excerpt: "About me"
 author_profile: true
 redirect_from: 
