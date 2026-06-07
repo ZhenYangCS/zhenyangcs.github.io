@@ -197,9 +197,9 @@
       globeImage:         "//unpkg.com/three-globe/example/img/earth-blue-marble.jpg",
       atmosphereColor:    "#7dd3fc",
       atmosphereAltitude: 0.28,
-      youColor:           "#0969da",
+      youColor:           "#e11d48",
       otherColor:         "#d97706",
-      youRing:            t => `rgba(9, 105, 218, ${1 - t})`,
+      youRing:            t => `rgba(225, 29, 72, ${1 - t})`,
       otherRing:          t => `rgba(217, 119, 6, ${(1 - t) * 0.75})`,
       sunIntensity:       3.2,
       ambientIntensity:   0.55,
@@ -454,16 +454,16 @@
       // bright pin dots for visitors
       .pointsData(points)
       .pointLat("lat").pointLng("lng")
-      .pointAltitude(d => d.you ? 0.06 : 0.01)
-      .pointRadius(d => d.you ? 0.62 : 0.20)
+      .pointAltitude(d => d.you ? 0.025 : 0.01)
+      .pointRadius(d => d.you ? 1.05 : 0.20)
       .pointColor(d => d.you ? config.youColor : config.otherColor)
-      .pointResolution(12)
+      .pointResolution(20)
       .pointLabel(d => {
         const tag = (theme === "light")
           ? `background:#ffffff;color:#1f2328;border:1px solid rgba(31,35,40,.15);box-shadow:0 1px 4px rgba(0,0,0,.15)`
           : `background:#0b0c0f;color:#fff;border:1px solid rgba(255,255,255,.12)`;
         const youTag = (theme === "light")
-          ? `background:#ffffff;color:#0969da;border:1px solid rgba(9,105,218,.45);box-shadow:0 0 12px rgba(9,105,218,.25)`
+          ? `background:#ffffff;color:#e11d48;border:1px solid rgba(225,29,72,.45);box-shadow:0 0 12px rgba(225,29,72,.3)`
           : `background:#0b0c0f;color:#22d3ee;border:1px solid rgba(34,211,238,.45);box-shadow:0 0 12px rgba(34,211,238,.35)`;
         return d.you
           ? `<div style="font:600 12px Georgia, serif;${youTag};padding:4px 8px;border-radius:6px">👋 ${d.name}</div>`
@@ -472,9 +472,9 @@
       // pulsating rings on every point
       .ringsData(points)
       .ringLat("lat").ringLng("lng")
-      .ringMaxRadius(d => d.you ? 5.5 : 2.6)
-      .ringPropagationSpeed(d => d.you ? 3.6 : 1.6)
-      .ringRepeatPeriod(d => d.you ? 800 : 1400 + Math.random() * 1100)
+      .ringMaxRadius(d => d.you ? 7 : 2.6)
+      .ringPropagationSpeed(d => d.you ? 4 : 1.6)
+      .ringRepeatPeriod(d => d.you ? 700 : 1400 + Math.random() * 1100)
       .ringAltitude(0.004)
       .ringColor(d => d.you ? config.youRing : config.otherRing)
       // glowing arcs — home → world + hub ↔ hub data links
