@@ -213,7 +213,7 @@
 
   function getCurrentTheme() {
     const t = document.documentElement.getAttribute("data-theme");
-    return (t === "light") ? "light" : "dark";
+    return (t === "dark") ? "dark" : "light";
   }
 
   let _lastYouPoint = null;
@@ -222,13 +222,13 @@
 
   // ─── Supabase configuration ─────────────────────────────────────────────────
   // Fill in YOUR Supabase project URL and anon (public) key below.
-  const SUPABASE_URL  = "YOUR_SUPABASE_URL";   // e.g. https://xxxxx.supabase.co
-  const SUPABASE_KEY  = "YOUR_SUPABASE_ANON_KEY";
+  const SUPABASE_URL  = "https://xgtwtrzpzybrsbcdyawr.supabase.co";
+  const SUPABASE_KEY  = "sb_publishable_WSLDV5OXKnmWKCQlxFZcFA__Du7kh5B";
 
   let _supabase = null;
   function getSupabase() {
     if (_supabase) return _supabase;
-    if (SUPABASE_URL === "YOUR_SUPABASE_URL" || !window.supabase) return null;
+    if (!SUPABASE_URL || SUPABASE_URL.indexOf("YOUR_") === 0 || !window.supabase) return null;
     _supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
     return _supabase;
   }
@@ -279,43 +279,10 @@
     return "v_" + Math.abs(h).toString(36);
   }
 
-  // ─── Fallback seed data (used when Supabase is not configured) ──────────────
-  const VISITOR_SEED = [
-    { name: "HangZhou",    lat: 30.2741, lng: 120.1551, size: 0.9,  continent: "AS" },
-    { name: "Beijing",     lat: 39.9042, lng: 116.4074, size: 0.55, continent: "AS" },
-    { name: "Shanghai",    lat: 31.2304, lng: 121.4737, size: 0.55, continent: "AS" },
-    { name: "Guangzhou",   lat: 23.1291, lng: 113.2644, size: 0.6,  continent: "AS" },
-    { name: "Shenzhen",    lat: 22.5431, lng: 114.0579, size: 0.5,  continent: "AS" },
-    { name: "Hong Kong",   lat: 22.3193, lng: 114.1694, size: 0.5,  continent: "AS" },
-    { name: "Taipei",      lat: 25.0330, lng: 121.5654, size: 0.4,  continent: "AS" },
-    { name: "Tokyo",       lat: 35.6762, lng: 139.6503, size: 0.55, continent: "AS" },
-    { name: "Seoul",       lat: 37.5665, lng: 126.9780, size: 0.45, continent: "AS" },
-    { name: "Singapore",   lat:  1.3521, lng: 103.8198, size: 0.45, continent: "AS" },
-    { name: "Bangalore",   lat: 12.9716, lng:  77.5946, size: 0.4,  continent: "AS" },
-    { name: "Delhi",       lat: 28.6139, lng:  77.2090, size: 0.35, continent: "AS" },
-    { name: "Dubai",       lat: 25.2048, lng:  55.2708, size: 0.3,  continent: "AS" },
-    { name: "Moscow",      lat: 55.7558, lng:  37.6173, size: 0.3,  continent: "EU" },
-    { name: "London",      lat: 51.5074, lng:  -0.1278, size: 0.5,  continent: "EU" },
-    { name: "Paris",       lat: 48.8566, lng:   2.3522, size: 0.45, continent: "EU" },
-    { name: "Zurich",      lat: 47.3769, lng:   8.5417, size: 0.35, continent: "EU" },
-    { name: "Amsterdam",   lat: 52.3676, lng:   4.9041, size: 0.35, continent: "EU" },
-    { name: "Berlin",      lat: 52.5200, lng:  13.4050, size: 0.4,  continent: "EU" },
-    { name: "Stockholm",   lat: 59.3293, lng:  18.0686, size: 0.3,  continent: "EU" },
-    { name: "San Francisco", lat: 37.7749, lng: -122.4194, size: 0.6,  continent: "NA" },
-    { name: "Los Angeles", lat: 34.0522, lng: -118.2437, size: 0.45, continent: "NA" },
-    { name: "Seattle",     lat: 47.6062, lng: -122.3321, size: 0.4,  continent: "NA" },
-    { name: "Boston",      lat: 42.3601, lng:  -71.0589, size: 0.45, continent: "NA" },
-    { name: "New York",    lat: 40.7128, lng:  -74.0060, size: 0.6,  continent: "NA" },
-    { name: "Toronto",     lat: 43.6532, lng:  -79.3832, size: 0.4,  continent: "NA" },
-    { name: "Montreal",    lat: 45.5017, lng:  -73.5673, size: 0.35, continent: "NA" },
-    { name: "Pittsburgh",  lat: 40.4406, lng:  -79.9959, size: 0.35, continent: "NA" },
-    { name: "Chicago",     lat: 41.8781, lng:  -87.6298, size: 0.4,  continent: "NA" },
-    { name: "São Paulo",   lat: -23.5505, lng: -46.6333, size: 0.3,  continent: "SA" },
-    { name: "Buenos Aires",lat: -34.6037, lng: -58.3816, size: 0.25, continent: "SA" },
-    { name: "Sydney",      lat: -33.8688, lng: 151.2093, size: 0.4,  continent: "OC" },
-    { name: "Melbourne",   lat: -37.8136, lng: 144.9631, size: 0.35, continent: "OC" },
-    { name: "Cape Town",   lat: -33.9249, lng:  18.4241, size: 0.25, continent: "AF" },
-  ];
+  // ─── Fallback seed (when Supabase is not configured) ──────────────────
+  // Empty on purpose — the globe will only show the current visitor
+  // ("you") until a backend like Supabase is wired up.
+  const VISITOR_SEED = [];
 
   const CONTINENT_NAMES = {
     AS: "Asia", EU: "Europe", NA: "N. America",
@@ -610,5 +577,13 @@
     renderPapers();
     initTheme();
     initGlobe();
+    var _flagBtn = document.getElementById("flagToggle");
+    var _flagPanel = document.getElementById("flagCounterPanel");
+    if (_flagBtn && _flagPanel) {
+      _flagBtn.addEventListener("click", function () {
+        var open = _flagPanel.classList.toggle("is-open");
+        _flagBtn.setAttribute("aria-expanded", open ? "true" : "false");
+      });
+    }
   });
 })();

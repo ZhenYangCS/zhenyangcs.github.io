@@ -573,6 +573,62 @@ ul.news strong { font-weight: 700; color: #f0f6fc; }
   letter-spacing: 0.04em;
 }
 
+/* ----------- Flag Counter (collapsible) ----------- */
+.flag-section {
+  text-align: center;
+  margin: 14px auto 0;
+}
+.flag-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  background: rgba(255, 255, 255, .04);
+  border: 1px solid rgba(255, 255, 255, .12);
+  border-radius: 999px;
+  color: rgba(255, 255, 255, .7);
+  font: 11px/1.4 Georgia, serif;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: color .25s ease, border-color .25s ease, background .25s ease;
+}
+.flag-toggle:hover {
+  color: #22d3ee;
+  border-color: rgba(34, 211, 238, .4);
+  background: rgba(34, 211, 238, .07);
+}
+.flag-toggle svg { transition: transform .3s ease; opacity: .8; }
+.flag-toggle[aria-expanded="true"] svg { transform: rotate(180deg); }
+.flag-panel {
+  overflow: hidden;
+  max-height: 0;
+  margin-top: 0;
+  opacity: 0;
+  transition: max-height .45s ease, margin-top .25s ease, opacity .35s ease;
+}
+.flag-panel.is-open {
+  max-height: 1400px;
+  margin-top: 12px;
+  opacity: 1;
+}
+.flag-panel a { display: inline-block; }
+.flag-panel img {
+  max-width: 100%;
+  border-radius: 4px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, .35);
+}
+[data-theme="light"] .flag-toggle {
+  background: rgba(0, 0, 0, .04);
+  border-color: rgba(0, 0, 0, .12);
+  color: rgba(31, 35, 40, .7);
+}
+[data-theme="light"] .flag-toggle:hover {
+  color: #0969da;
+  border-color: rgba(9, 105, 218, .35);
+  background: rgba(9, 105, 218, .06);
+}
+[data-theme="light"] .flag-panel img { box-shadow: 0 4px 14px rgba(0, 0, 0, .12); }
+
 .footer-line {
   text-align: center;
   font-size: 11px;
