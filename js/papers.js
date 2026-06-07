@@ -44,7 +44,7 @@ window.PAPERS = [
     tags: ["LLM Reasoning", "Efficiency"],
     abbr: "MTI",
     thumbs: [
-      "images/papers/mti/02.jpg"
+      "images/papers/mti/01.jpg"
     ],
     description: "We show a tiny test-time nudge — applied at the right token, at the right moment — beats heavy retraining for LLM reasoning."
   },
@@ -91,7 +91,7 @@ window.PAPERS = [
     abbr: "OIR",
     thumbs: [
       "images/papers/oir/01.jpg",
-      "images/papers/oir/03.jpg",
+      "images/papers/oir/02.jpg",
       "images/papers/oir/method.jpg"
     ],
     description: "Decouples multi-object editing into per-object inversions, then reassembles — letting each edit speak without interfering."
@@ -163,8 +163,8 @@ window.PAPERS = [
   {
     title: "Streaming Video Diffusion: Online Video Editing with Diffusion Models",
     authors: [
-      "Feng Chen",
-      { name: "Zhen Yang", me: true },
+      { name: "Feng Chen", equal: true },
+      { name: "Zhen Yang", me: true, equal: true },
       "Bohan Zhuang", "Qi Wu"
     ],
     venue: "arXiv",
@@ -197,7 +197,7 @@ window.PAPERS = [
     citations: 17,
     tags: ["Visual Editing"],
     thumbs: [
-      "images/papers/freecompose/02.jpg"
+      "images/papers/freecompose/01.jpg"
     ],
     description: "Compose, harmonize and re-light objects across images — zero-shot, with a frozen diffusion prior."
   },

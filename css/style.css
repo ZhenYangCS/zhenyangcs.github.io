@@ -473,6 +473,7 @@ ul.news strong { font-weight: 700; color: #111; }
 .visitor-inner {
   max-width: 1060px;
   margin: 0 auto;
+  position: relative;
 }
 #visitors h2 {
   font-family: Georgia, serif;
@@ -490,31 +491,102 @@ ul.news strong { font-weight: 700; color: #111; }
   font-style: italic;
 }
 
+/* tech-style LIVE badge in the top-right of the visitors block */
+.visitor-inner::before {
+  content: "●  LIVE · GLOBAL NETWORK";
+  position: absolute;
+  top: 4px;
+  right: 0;
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 9.5px;
+  letter-spacing: 0.18em;
+  color: rgba(34, 211, 238, 0.78);
+  padding: 2px 8px 2px 7px;
+  border: 1px solid rgba(34, 211, 238, 0.32);
+  border-radius: 2px;
+  background: rgba(34, 211, 238, 0.05);
+  box-shadow: 0 0 12px rgba(34, 211, 238, 0.12) inset;
+  pointer-events: none;
+  z-index: 3;
+}
+
 #globe-stage {
   position: relative;
-  height: 220px;
+  /* Default: actually short so the surrounding dark block is also slim.
+     Hover expands the height to reveal the full globe. */
+  height: 145px;
   display: flex;
   justify-content: center;
   isolation: isolate;
+  border: 1px solid rgba(34, 211, 238, 0.07);
+  border-radius: 3px;
+  overflow: hidden;
+  /* radial glow + faint cyan grid for a HUD background */
+  background:
+    radial-gradient(ellipse at center,
+      rgba(34, 211, 238, 0.12) 0%,
+      rgba(34, 211, 238, 0.04) 38%,
+      transparent 68%),
+    linear-gradient(rgba(34, 211, 238, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34, 211, 238, 0.035) 1px, transparent 1px);
+  background-size: 100% 100%, 36px 36px, 36px 36px;
+  background-position: center;
+  transition: height 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
-/* soft cyan radial glow behind the globe */
+#globe-stage:hover {
+  height: 260px;
+}
+/* Four corner brackets — painted via gradient backgrounds on a single layer. */
 #globe-stage::before {
   content: "";
   position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(ellipse at center,
-      rgba(34, 211, 238, 0.10) 0%,
-      rgba(34, 211, 238, 0.04) 35%,
-      transparent 65%);
+  inset: 8px;
   pointer-events: none;
-  z-index: 0;
+  z-index: 2;
+  background:
+    linear-gradient(rgba(34,211,238,0.7), rgba(34,211,238,0.7)) top    left  / 14px 1px no-repeat,
+    linear-gradient(rgba(34,211,238,0.7), rgba(34,211,238,0.7)) top    left  / 1px  14px no-repeat,
+    linear-gradient(rgba(34,211,238,0.7), rgba(34,211,238,0.7)) top    right / 14px 1px no-repeat,
+    linear-gradient(rgba(34,211,238,0.7), rgba(34,211,238,0.7)) top    right / 1px  14px no-repeat,
+    linear-gradient(rgba(34,211,238,0.7), rgba(34,211,238,0.7)) bottom left  / 14px 1px no-repeat,
+    linear-gradient(rgba(34,211,238,0.7), rgba(34,211,238,0.7)) bottom left  / 1px  14px no-repeat,
+    linear-gradient(rgba(34,211,238,0.7), rgba(34,211,238,0.7)) bottom right / 14px 1px no-repeat,
+    linear-gradient(rgba(34,211,238,0.7), rgba(34,211,238,0.7)) bottom right / 1px  14px no-repeat;
+}
+/* Slow vertical scan line moving across the stage. */
+#globe-stage::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0;
+  top: 0;
+  height: 80px;
+  pointer-events: none;
+  z-index: 1;
+  background: linear-gradient(180deg,
+    rgba(34, 211, 238, 0) 0%,
+    rgba(34, 211, 238, 0.09) 50%,
+    rgba(34, 211, 238, 0) 100%);
+  animation: globe-scan 7s linear infinite;
+  will-change: transform;
+}
+@keyframes globe-scan {
+  0%   { transform: translateY(-80px); opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { transform: translateY(260px); opacity: 0; }
 }
 #globeViz {
+  /* Keep the canvas at its natural 260px so three.js renders a perfectly
+     round globe regardless of the visible stage height. The parent
+     #globe-stage clips the overflow when collapsed. */
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
   width: 100%;
-  height: 100%;
+  height: 260px;
   cursor: grab;
-  position: relative;
   z-index: 1;
 }
 #globeViz:active { cursor: grabbing; }
@@ -592,7 +664,12 @@ ul.news strong { font-weight: 700; color: #111; }
   .header-photo { width: 130px; }
   .paper { flex-direction: column; gap: 10px; }
   .paper-thumb { width: 100%; max-width: 360px; }
-  #globe-stage { height: 200px; }
+  #globe-stage { height: 220px; }
   .cr-arrow { opacity: 1; }
   .globe-caption { font-size: 10px; }
+  .visitor-inner::before {
+    position: static;
+    display: inline-block;
+    margin: 0 0 6px 0;
+  }
 }

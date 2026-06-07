@@ -192,17 +192,36 @@
     const palette = [
       ["rgba(34,211,238,0)",  "rgba(34,211,238,0.95)"],   // cyan
       ["rgba(236,72,153,0)",  "rgba(236,72,153,0.85)"],   // pink
-      ["rgba(167,139,250,0)", "rgba(167,139,250,0.85)"]   // violet
+      ["rgba(167,139,250,0)", "rgba(167,139,250,0.85)"],  // violet
+      ["rgba(74,222,128,0)",  "rgba(74,222,128,0.80)"]    // green
     ];
-    return VISITOR_SEED
+    const pick = () => palette[Math.floor(Math.random() * palette.length)];
+
+    const arcs = VISITOR_SEED
       .filter(c => ARC_TARGETS.includes(c.name))
       .map(c => ({
         startLat: HOME.lat,
         startLng: HOME.lng,
         endLat: c.lat,
         endLng: c.lng,
-        color: palette[Math.floor(Math.random() * palette.length)]
+        color: pick()
       }));
+
+    // Extra hub-to-hub data links — denser, more "network ops" feel.
+    const hubs = ["San Francisco", "New York", "London", "Tokyo", "Singapore", "Sydney", "Berlin", "Boston"];
+    const hubCities = VISITOR_SEED.filter(c => hubs.includes(c.name));
+    for (let i = 0; i < hubCities.length; i++) {
+      for (let j = i + 1; j < hubCities.length; j++) {
+        if (Math.random() < 0.42) {
+          arcs.push({
+            startLat: hubCities[i].lat, startLng: hubCities[i].lng,
+            endLat:   hubCities[j].lat, endLng:   hubCities[j].lng,
+            color: pick()
+          });
+        }
+      }
+    }
+    return arcs;
   }
 
   // Try to fetch the visitor's real geolocation via a free IP API.
@@ -291,80 +310,63 @@
 
     const points = VISITOR_SEED.concat([youPoint]);
 
-    // Tech-style globe: dark translucent sphere + cyan hex-dot continents +
-    // pulsating rings on visitors + glowing arcs.
+    // Real Earth texture + cyan atmosphere glow, pulsating rings on visitors,
+    // glowing arcs and a denser hub-to-hub data network.
     const globe = Globe()
       .backgroundColor("rgba(0,0,0,0)")
+      .globeImageUrl("//unpkg.com/three-globe/example/img/earth-dark.jpg")
+      .bumpImageUrl("//unpkg.com/three-globe/example/img/earth-topology.png")
       .showAtmosphere(true)
       .atmosphereColor("#22d3ee")
-      .atmosphereAltitude(0.25)
+      .atmosphereAltitude(0.32)
       // bright pin dots for visitors
       .pointsData(points)
       .pointLat("lat").pointLng("lng")
-      .pointAltitude(d => d.you ? 0.05 : 0.008)
-      .pointRadius(d => d.you ? 0.55 : 0.18)
+      .pointAltitude(d => d.you ? 0.06 : 0.01)
+      .pointRadius(d => d.you ? 0.62 : 0.20)
       .pointColor(d => d.you ? "#22d3ee" : "#ec4899")
+      .pointResolution(12)
       .pointLabel(d => d.you
         ? `<div style="font:600 12px Georgia, serif;background:#0b0c0f;color:#22d3ee;padding:4px 8px;border-radius:6px;border:1px solid rgba(34,211,238,.45);box-shadow:0 0 12px rgba(34,211,238,.35)">👋 ${d.name}</div>`
         : `<div style="font:500 12px Georgia, serif;background:#0b0c0f;color:#fff;padding:4px 8px;border-radius:6px;border:1px solid rgba(255,255,255,.12)">${d.name}</div>`)
       // pulsating rings on every point
       .ringsData(points)
       .ringLat("lat").ringLng("lng")
-      .ringMaxRadius(d => d.you ? 4.5 : 2.2)
-      .ringPropagationSpeed(d => d.you ? 3 : 1.4)
-      .ringRepeatPeriod(d => d.you ? 900 : 1600 + Math.random() * 1200)
+      .ringMaxRadius(d => d.you ? 5.5 : 2.6)
+      .ringPropagationSpeed(d => d.you ? 3.6 : 1.6)
+      .ringRepeatPeriod(d => d.you ? 800 : 1400 + Math.random() * 1100)
+      .ringAltitude(0.004)
       .ringColor(d => t => d.you
         ? `rgba(34, 211, 238, ${1 - t})`
-        : `rgba(236, 72, 153, ${(1 - t) * 0.7})`)
-      // glowing arcs from home
+        : `rgba(236, 72, 153, ${(1 - t) * 0.75})`)
+      // glowing arcs — home → world + hub ↔ hub data links
       .arcsData(buildArcs())
       .arcColor("color")
-      .arcDashLength(0.4)
-      .arcDashGap(2)
-      .arcDashAnimateTime(2400)
-      .arcStroke(0.4)
-      .arcAltitudeAutoScale(0.45)
+      .arcDashLength(0.35)
+      .arcDashGap(1.6)
+      .arcDashAnimateTime(2000)
+      .arcStroke(0.32)
+      .arcAltitudeAutoScale(0.5)
       (el);
     _globeInstance = globe;
 
-    // Make the globe itself a dark translucent sphere (no photo texture).
+    // Subtle material tweaks so the textured Earth blends with the dark UI.
     const globeMaterial = globe.globeMaterial();
-    if (globeMaterial && globeMaterial.color) {
-      globeMaterial.color.set('#06121f');
-      globeMaterial.transparent = true;
-      globeMaterial.opacity = 0.95;
-      if ('shininess' in globeMaterial) globeMaterial.shininess = 0.6;
-      if ('emissive' in globeMaterial && globeMaterial.emissive) {
-        globeMaterial.emissive.set('#020815');
-      }
+    if (globeMaterial) {
+      if ('shininess' in globeMaterial) globeMaterial.shininess = 0.7;
+      if ('bumpScale' in globeMaterial) globeMaterial.bumpScale = 8;
     }
 
     const controls = globe.controls();
     controls.autoRotate = true;
-    controls.autoRotateSpeed = 0.6;
+    controls.autoRotateSpeed = 0.55;
     controls.enableZoom = false;
 
     // Fix blurriness on Retina/HiDPI displays
     globe.renderer().setPixelRatio(window.devicePixelRatio);
 
-    // Continents drawn as glowing cyan hex-dot grid
-    fetch('https://unpkg.com/world-atlas@2/countries-110m.json')
-      .then(r => r.json())
-      .then(data => {
-        if (typeof topojson !== 'undefined') {
-          const countries = topojson.feature(data, data.objects.countries);
-          globe
-            .hexPolygonsData(countries.features)
-            .hexPolygonResolution(3)
-            .hexPolygonMargin(0.35)
-            .hexPolygonUseDots(true)
-            .hexPolygonColor(() => `rgba(56, 189, 248, ${0.55 + Math.random() * 0.4})`);
-        }
-      })
-      .catch(() => {});
-
     // Look at the visitor's continent if known, else default to East Asia.
-    const pov = { lat: youPoint.lat || 25, lng: youPoint.lng || 120, altitude: 1.7 };
+    const pov = { lat: youPoint.lat || 25, lng: youPoint.lng || 120, altitude: 1.85 };
     globe.pointOfView(pov, 0);
 
     const resize = () => globe.width(el.clientWidth).height(el.clientHeight);
