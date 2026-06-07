@@ -1,2 +1,14 @@
-_site/
+# Build artifacts
+.DS_Store
+*.swp
+*.log
 
+# Editors
+.idea/
+.vscode/
+
+# Node (in case we add tooling later)
+node_modules/
+
+# Misc
+Thumbs.db
