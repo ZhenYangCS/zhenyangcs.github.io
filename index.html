@@ -28,6 +28,29 @@
 </head>
 <body>
 
+<!-- ============ Theme Toggle (top-right, fixed) ============ -->
+<button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle dark / light theme" title="Toggle theme">
+  <span class="theme-toggle-track">
+    <svg class="theme-toggle-glyph theme-toggle-glyph-moon" viewBox="0 0 24 24" width="12" height="12" aria-hidden="true">
+      <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" fill="currentColor"/>
+    </svg>
+    <svg class="theme-toggle-glyph theme-toggle-glyph-sun" viewBox="0 0 24 24" width="12" height="12" aria-hidden="true">
+      <circle cx="12" cy="12" r="4" fill="currentColor"/>
+      <g stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none">
+        <line x1="12" y1="2"  x2="12" y2="4"/>
+        <line x1="12" y1="20" x2="12" y2="22"/>
+        <line x1="4.9" y1="4.9"  x2="6.3" y2="6.3"/>
+        <line x1="17.7" y1="17.7" x2="19.1" y2="19.1"/>
+        <line x1="2"  y1="12" x2="4"  y2="12"/>
+        <line x1="20" y1="12" x2="22" y2="12"/>
+        <line x1="4.9"  y1="19.1" x2="6.3"  y2="17.7"/>
+        <line x1="17.7" y1="6.3"  x2="19.1" y2="4.9"/>
+      </g>
+    </svg>
+    <span class="theme-toggle-thumb"></span>
+  </span>
+</button>
+
 <div id="content">
 
   <!-- ============ Header ============ -->
@@ -65,26 +88,9 @@
         <img class="avatar-default" src="images/avatar.jpg" alt="Zhen Yang" />
         <img class="avatar-hover" src="images/avatar-hover.jpg" alt="Zhen Yang as a kid" />
       </div>
-      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle dark / light theme" title="Toggle theme">
-        <span class="theme-toggle-track">
-          <svg class="theme-toggle-glyph theme-toggle-glyph-moon" viewBox="0 0 24 24" width="12" height="12" aria-hidden="true">
-            <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" fill="currentColor"/>
-          </svg>
-          <svg class="theme-toggle-glyph theme-toggle-glyph-sun" viewBox="0 0 24 24" width="12" height="12" aria-hidden="true">
-            <circle cx="12" cy="12" r="4" fill="currentColor"/>
-            <g stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none">
-              <line x1="12" y1="2"  x2="12" y2="4"/>
-              <line x1="12" y1="20" x2="12" y2="22"/>
-              <line x1="4.9" y1="4.9"  x2="6.3" y2="6.3"/>
-              <line x1="17.7" y1="17.7" x2="19.1" y2="19.1"/>
-              <line x1="2"  y1="12" x2="4"  y2="12"/>
-              <line x1="20" y1="12" x2="22" y2="12"/>
-              <line x1="4.9"  y1="19.1" x2="6.3"  y2="17.7"/>
-              <line x1="17.7" y1="6.3"  x2="19.1" y2="4.9"/>
-            </g>
-          </svg>
-          <span class="theme-toggle-thumb"></span>
-        </span>
+      <button class="avatar-toggle" id="avatarToggle" type="button" aria-pressed="false" title="Time machine">
+        <span class="avatar-toggle-icon">✨</span>
+        <span class="avatar-toggle-label">Make me younger</span>
       </button>
     </div>
   </div>
@@ -206,6 +212,6 @@
 <script src="https://unpkg.com/globe.gl@2.32.6/dist/globe.gl.min.js"></script>
 <script src="https://unpkg.com/topojson-client@3"></script>
 <script src="js/papers.js?v=3"></script>
-<script src="js/main.js?v=8"></script>
+<script src="js/main.js?v=9"></script>
 </body>
 </html>

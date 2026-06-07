@@ -585,5 +585,19 @@
         _flagBtn.setAttribute("aria-expanded", open ? "true" : "false");
       });
     }
+
+    // ✨ Time-machine button — toggles the avatar between adult and childhood photo.
+    var _avatarBtn = document.getElementById("avatarToggle");
+    var _avatarLabel = _avatarBtn ? _avatarBtn.querySelector(".avatar-toggle-label") : null;
+    var _avatarWrap = document.querySelector(".avatar-wrap");
+    if (_avatarBtn && _avatarWrap) {
+      _avatarBtn.addEventListener("click", function () {
+        var young = _avatarWrap.classList.toggle("is-young");
+        _avatarBtn.setAttribute("aria-pressed", young ? "true" : "false");
+        if (_avatarLabel) {
+          _avatarLabel.textContent = young ? "Bring me back" : "Make me younger";
+        }
+      });
+    }
   });
 })();

@@ -65,11 +65,53 @@ img { max-width: 100%; }
   left: 0;
   opacity: 0;
 }
-.avatar-wrap:hover .avatar-default {
+.avatar-wrap.is-young .avatar-default {
   opacity: 0;
 }
-.avatar-wrap:hover .avatar-hover {
+.avatar-wrap.is-young .avatar-hover {
   opacity: 1;
+}
+
+/* ----------- Avatar time-machine button ----------- */
+.avatar-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 10px auto 0;
+  padding: 6px 12px;
+  width: auto;
+  background: rgba(225, 29, 72, 0.06);
+  border: 1px solid rgba(225, 29, 72, 0.25);
+  border-radius: 999px;
+  color: #be185d;
+  font: 11.5px/1.4 Georgia, serif;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  -webkit-tap-highlight-color: transparent;
+  white-space: nowrap;
+}
+.avatar-toggle:hover {
+  background: rgba(225, 29, 72, 0.12);
+  border-color: rgba(225, 29, 72, 0.5);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(225, 29, 72, 0.18);
+}
+.avatar-toggle:active {
+  transform: translateY(0);
+}
+.avatar-toggle-icon {
+  display: inline-block;
+  font-size: 13px;
+  transition: transform 0.5s cubic-bezier(.4,1.4,.5,1);
+}
+.avatar-toggle[aria-pressed="true"] .avatar-toggle-icon {
+  transform: rotate(360deg) scale(1.15);
+}
+.header-photo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 #content h1 {
@@ -652,8 +694,10 @@ ul.news strong { font-weight: 700; color: #f0f6fc; }
    Theme toggle (top-right slider) — works for both themes
    ============================================================= */
 .theme-toggle {
-  display: block;
-  margin: 12px auto 0;
+  position: fixed;
+  top: 18px;
+  right: 22px;
+  z-index: 1000;
   width: 52px;
   height: 26px;
   padding: 0;
