@@ -49,6 +49,9 @@ img { max-width: 100%; }
   width: 150px;
   position: relative;
 }
+.avatar-wrap {
+  position: relative;
+}
 .header-photo img {
   width: 100%;
   display: block;
@@ -62,10 +65,10 @@ img { max-width: 100%; }
   left: 0;
   opacity: 0;
 }
-.header-photo:hover .avatar-default {
+.avatar-wrap:hover .avatar-default {
   opacity: 0;
 }
-.header-photo:hover .avatar-hover {
+.avatar-wrap:hover .avatar-hover {
   opacity: 1;
 }
 
