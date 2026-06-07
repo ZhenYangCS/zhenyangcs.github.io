@@ -223,7 +223,7 @@
   // ─── Supabase configuration ─────────────────────────────────────────────────
   // Fill in YOUR Supabase project URL and anon (public) key below.
   const SUPABASE_URL  = "https://xgtwtrzpzybrsbcdyawr.supabase.co";
-  const SUPABASE_KEY  = "sb_publishable_WSLDV5OXKnmWKCQlxFZcFA__Du7kh5B";
+  const SUPABASE_KEY  = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhndHd0cnpwenlicnNiY2R5YXdyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA4MzU1NDIsImV4cCI6MjA5NjQxMTU0Mn0._NnAWDQdyCzcQ9baKQsB9zYLN_qvVj7LxkkyDqXmHqs";
 
   let _supabase = null;
   function getSupabase() {
