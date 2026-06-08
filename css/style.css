@@ -170,7 +170,7 @@ img { max-width: 100%; }
 }
 #content h3.pub-group-title::before {
   content: "§ ";
-  color: #58a6ff;
+  color: #4ade80;
   font-weight: 400;
 }
 
@@ -254,7 +254,9 @@ ul.news strong { font-weight: 700; color: #f0f6fc; }
   font-family: ui-monospace, Menlo, monospace;
   font-size: 11.5px;
   color: #6e7681;
-  margin-left: 6px;
+  margin-left: 0;
+  margin-top: 1px;
+  display: inline-block;
 }
 .exp-content .advisor {
   display: inline;
@@ -263,8 +265,8 @@ ul.news strong { font-weight: 700; color: #f0f6fc; }
   margin-left: 8px;
 }
 .exp-content .advisor::before {
-  content: "· ";
-  color: #30363d;
+  content: "· advised by ";
+  color: #6e7681;
 }
 .exp-content p {
   margin: 2px 0 0 0;
@@ -440,8 +442,8 @@ ul.news strong { font-weight: 700; color: #f0f6fc; }
 .paper-detail {
   margin-top: 6px;
   padding: 8px 12px;
-  border-left: 3px solid #58a6ff;
-  background: rgba(88, 166, 255, .06);
+  border-left: 3px solid #4ade80;
+  background: rgba(74, 222, 128, .06);
   border-radius: 0 4px 4px 0;
   font-size: 12.5px;
   line-height: 1.55;
@@ -483,9 +485,9 @@ ul.news strong { font-weight: 700; color: #f0f6fc; }
   transition: all .2s ease;
 }
 .bib-copy:hover {
-  background: rgba(88, 166, 255, .12);
-  border-color: rgba(88, 166, 255, .4);
-  color: #58a6ff;
+  background: rgba(74, 222, 128, .12);
+  border-color: rgba(74, 222, 128, .45);
+  color: #4ade80;
 }
 .bib-copy.is-copied {
   background: rgba(74, 222, 128, .15);
@@ -494,11 +496,11 @@ ul.news strong { font-weight: 700; color: #f0f6fc; }
 }
 
 /* Light theme overrides */
-[data-theme="light"] .paper-toggle { color: #1772d0; }
-[data-theme="light"] .paper-toggle:hover { color: #f09228; }
+[data-theme="light"] .paper-toggle { color: #16a34a; }
+[data-theme="light"] .paper-toggle:hover { color: #15803d; }
 [data-theme="light"] .paper-detail {
-  border-left-color: #1772d0;
-  background: rgba(23, 114, 208, .05);
+  border-left-color: #16a34a;
+  background: rgba(22, 163, 74, .05);
   color: #1f2328;
 }
 [data-theme="light"] .paper-detail.bib pre { color: #1f2328; }
@@ -508,9 +510,9 @@ ul.news strong { font-weight: 700; color: #f0f6fc; }
   color: #57606a;
 }
 [data-theme="light"] .bib-copy:hover {
-  background: rgba(23, 114, 208, .08);
-  border-color: rgba(23, 114, 208, .35);
-  color: #1772d0;
+  background: rgba(22, 163, 74, .08);
+  border-color: rgba(22, 163, 74, .4);
+  color: #16a34a;
 }
 [data-theme="light"] .bib-copy.is-copied {
   background: rgba(34, 134, 58, .1);
@@ -1014,7 +1016,7 @@ ul.news strong { font-weight: 700; color: #f0f6fc; }
 [data-theme="light"] .exp-content .role   { color: #57606a; }
 [data-theme="light"] .exp-content .time   { color: #6e7781; }
 [data-theme="light"] .exp-content .advisor { color: #57606a; }
-[data-theme="light"] .exp-content .advisor::before { color: #d0d7de; }
+[data-theme="light"] .exp-content .advisor::before { color: #6e7781; }
 
 [data-theme="light"] .paper { border-bottom-color: #d8dee4; }
 [data-theme="light"] .paper-thumb {
@@ -1071,3 +1073,14 @@ ul.news strong { font-weight: 700; color: #f0f6fc; }
 [data-theme="light"] .cont-stat.is-you::after   { color: rgba(9, 105, 218, .8); }
 [data-theme="light"] .footer-line { color: rgba(31, 35, 40, .45); }
 
+/* ----------- Hobbies emoji micro-interactions ----------- */
+.hobby-icon {
+  display: inline-block;
+  font-size: 1.05em;
+  cursor: default;
+  transition: transform 0.35s cubic-bezier(.4, 1.6, .5, 1);
+  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, .08));
+}
+.hobby-icon:hover {
+  transform: scale(1.4) rotate(-10deg);
+}
