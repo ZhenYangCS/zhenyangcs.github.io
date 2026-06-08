@@ -1084,3 +1084,29 @@ ul.news strong { font-weight: 700; color: #f0f6fc; }
 .hobby-icon:hover {
   transform: scale(1.4) rotate(-10deg);
 }
+
+/* ----------- A. Text selection: green highlight ----------- */
+::selection      { background: rgba(74, 222, 128, .35); color: inherit; }
+::-moz-selection { background: rgba(74, 222, 128, .35); color: inherit; }
+
+/* ----------- B. Link micro-lift on hover ----------- */
+a {
+  transition: transform 0.25s cubic-bezier(.4, 1.4, .5, 1), color 0.2s ease;
+}
+a:hover {
+  transform: translateY(-1px);
+}
+
+/* ----------- C. Industry logo: lift + soft green glow on row hover ----------- */
+.exp-logo {
+  transition: transform 0.4s cubic-bezier(.4, 1.6, .5, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+}
+.experience .exp-item:hover .exp-logo {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 10px rgba(74, 222, 128, .22), 0 1px 3px rgba(0,0,0,.4);
+  border-color: rgba(74, 222, 128, .5);
+}
+[data-theme="light"] .experience .exp-item:hover .exp-logo {
+  box-shadow: 0 4px 10px rgba(34, 197, 94, .25), 0 1px 3px rgba(0,0,0,.08);
+  border-color: rgba(34, 197, 94, .55);
+}
