@@ -1110,3 +1110,76 @@ a:hover {
   box-shadow: 0 4px 10px rgba(34, 197, 94, .25), 0 1px 3px rgba(0,0,0,.08);
   border-color: rgba(34, 197, 94, .55);
 }
+
+/* ===========================================================
+   Paper-area micro-interactions (A → F)
+   =========================================================== */
+
+/* A. Paper card: green left rail glides in on hover */
+.paper { position: relative; }
+.paper::before {
+  content: "";
+  position: absolute;
+  left: -10px; top: 10%; bottom: 10%;
+  width: 3px;
+  border-radius: 3px;
+  background: linear-gradient(180deg,
+    rgba(74,222,128,0)   0%,
+    rgba(74,222,128,.7) 50%,
+    rgba(74,222,128,0) 100%);
+  opacity: 0;
+  transform: scaleY(0.3);
+  transform-origin: center;
+  transition: opacity 0.3s ease, transform 0.4s cubic-bezier(.4,1.4,.5,1);
+  pointer-events: none;
+}
+.paper:hover::before { opacity: 1; transform: scaleY(1); }
+
+/* B. Thumbnail gentle zoom */
+.paper-thumb img,
+.paper-thumb .cr-slide {
+  transition: transform 0.45s cubic-bezier(.2,.8,.2,1), filter 0.3s ease;
+}
+.paper-thumb:hover img,
+.paper-thumb:hover .cr-slide.is-active {
+  transform: scale(1.03);
+  filter: brightness(1.04);
+}
+
+/* C. TLDR / BibTeX panel: slide & fade in on every expansion */
+.paper-detail:not([hidden]) {
+  animation: detailSlideIn 0.28s cubic-bezier(.2,.8,.2,1);
+}
+@keyframes detailSlideIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* D. Carousel arrows: nudge in their travel direction */
+.cr-arrow { transition: transform 0.25s cubic-bezier(.4,1.6,.5,1), background-color 0.2s, opacity 0.2s; }
+.cr-prev:hover { transform: translateY(-50%) translateX(-3px); }
+.cr-next:hover { transform: translateY(-50%) translateX(3px); }
+
+/* E. Carousel dots: hover grows + green */
+.cr-dot:hover {
+  transform: scale(1.6);
+  background-color: rgba(74, 222, 128, .85);
+  border-color: rgba(74, 222, 128, 1);
+}
+
+/* F. First-authored papers: shy ✨ peeks out on hover */
+#first-author-list .paper::after {
+  content: "✨";
+  position: absolute;
+  top: 4px; right: 4px;
+  font-size: 14px;
+  opacity: 0;
+  transform: translateY(-4px) scale(0.7) rotate(0deg);
+  transition: opacity 0.4s ease, transform 0.5s cubic-bezier(.4,1.6,.5,1);
+  pointer-events: none;
+  filter: drop-shadow(0 0 4px rgba(250, 204, 21, .5));
+}
+#first-author-list .paper:hover::after {
+  opacity: 0.85;
+  transform: translateY(0) scale(1) rotate(-12deg);
+}
