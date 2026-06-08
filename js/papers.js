@@ -242,4 +242,25 @@ window.PAPERS = [
     ],
     description: "Couples structured pruning with LoRA so that compression and adaptation reinforce each other."
   },
+  {
+    title: "MemDreamer: Decoupling Perception and Reasoning for Long Video Understanding via Hierarchical Graph Memory and Agentic Retrieval Mechanism",
+    authors: [
+      "Cong Chen", "Guo Gan", "Kaixiang Ji", "ChaoYang Zhang",
+      { name: "Zhen Yang", me: true },
+      "Guangming Yao", "Hao Chen", "Jingdong Chen", "Yi Yuan", "Chunhua Shen"
+    ],
+    venue: "arXiv 2026",
+    year: 2026,
+    links: {
+      arxiv: "https://arxiv.org/abs/2606.07512",
+    },
+    citations: 0,
+    tags: ["Long Video", "Multi-Agent", "LLM Reasoning"],
+    abbr: "MemDreamer",
+    thumbs: [
+      "images/papers/memdreamer/01.jpg",
+      "images/papers/memdreamer/method.jpg"
+    ],
+    description: "Turns long-video understanding into agentic exploration — builds a hierarchical graph memory and reasons through it with an Observation–Reason–Action loop, reaching SOTA with just 2% of the full context."
+  },
 ];

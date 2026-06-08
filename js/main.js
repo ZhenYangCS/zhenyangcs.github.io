@@ -111,7 +111,12 @@
 
     const first = sorted.filter(({ p }) => isFirstAuthor(p));
     const co    = sorted.filter(({ p }) => !isFirstAuthor(p))
-      .sort((a, b) => (b.p.citations || 0) - (a.p.citations || 0));
+      .sort((a, b) => {
+        // Co-authored: by citations desc, then year desc (newer first on tie).
+        const c = (b.p.citations || 0) - (a.p.citations || 0);
+        if (c !== 0) return c;
+        return (b.p.year || 0) - (a.p.year || 0);
+      });
 
     if (firstList) {
       firstList.innerHTML = first.map(({ p }) => paperEntry(p)).join("");
