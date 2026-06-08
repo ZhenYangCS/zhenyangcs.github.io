@@ -24,7 +24,7 @@ window.PAPERS = [
     tags: ["Multi-Agent", "LLM Reasoning", "Efficiency"],
     abbr: "StreamMA",
     thumbs: [
-      "images/papers/streamma/01.jpg"
+      "images/papers/streamma/01.webp"
     ],
     description: "A streaming protocol that lets reasoning agents talk while they think — faster, cheaper, and more accurate.",
     tldr: "Streaming reasoning steps between multi-agents makes the pipeline both faster and more accurate, and reveals a new step-level scaling law.",
@@ -51,7 +51,7 @@ window.PAPERS = [
     tags: ["LLM Reasoning", "Efficiency"],
     abbr: "MTI",
     thumbs: [
-      "images/papers/mti/01.jpg"
+      "images/papers/mti/01.webp"
     ],
     description: "We show a tiny test-time nudge — applied at the right token, at the right moment — beats heavy retraining for LLM reasoning.",
     tldr: "Less intervention, better reasoning: MTI intervenes only on high-entropy tokens to improve LLM reasoning with minimal computation.",
@@ -81,8 +81,8 @@ window.PAPERS = [
     },
     citations: 5,
     thumbs: [
-      "images/papers/rectifiedhr/01.jpg",
-      "images/papers/rectifiedhr/method.jpg"
+      "images/papers/rectifiedhr/01.webp",
+      "images/papers/rectifiedhr/method.webp"
     ],
     tags: ["Visual Generation"],
     description: "A training-free recipe for crisp, high-resolution diffusion outputs — by rectifying the latent energy along the denoising trajectory.",
@@ -112,9 +112,9 @@ window.PAPERS = [
     tags: ["Visual Editing"],
     abbr: "OIR",
     thumbs: [
-      "images/papers/oir/01.jpg",
-      "images/papers/oir/02.jpg",
-      "images/papers/oir/method.jpg"
+      "images/papers/oir/01.webp",
+      "images/papers/oir/02.webp",
+      "images/papers/oir/method.webp"
     ],
     description: "Decouples multi-object editing into per-object inversions, then reassembles — letting each edit speak without interfering.",
     tldr: "Editing tasks differ in difficulty; OIR is the first inversion-based method to achieve superior multi-object editing.",
@@ -144,7 +144,7 @@ window.PAPERS = [
     citations: 77,
     tags: ["Visual Customization"],
     thumbs: [
-      "images/papers/freecustom/01.jpg"
+      "images/papers/freecustom/01.webp"
     ],
     description: "Tuning-free, reference-driven multi-concept image generation. Extended to video in IJCV 2025 (FreerCustom).",
     tldr: "The first training-free customization method using a single reference image.",
@@ -173,7 +173,7 @@ window.PAPERS = [
     citations: 1,
     tags: ["Stereo Generation"],
     thumbs: [
-      "images/papers/stereopilot/01.jpg"
+      "images/papers/stereopilot/01.webp"
     ],
     description: "Turns any 2D video into high-quality 3D stereo in a single step using generative priors.",
     bibtex: `@article{shen2025stereopilot,
@@ -200,8 +200,8 @@ window.PAPERS = [
     citations: 2,
     tags: ["3D Texture Generation"],
     thumbs: [
-      "images/papers/flexpainter/01.jpg",
-      "images/papers/flexpainter/method.jpg"
+      "images/papers/flexpainter/01.webp",
+      "images/papers/flexpainter/method.webp"
     ],
     description: "Multi-view consistent texture synthesis for 3D meshes — flexible inputs, harmonized outputs.",
     bibtex: `@article{yan2025flexpainter,
@@ -228,7 +228,7 @@ window.PAPERS = [
     tags: ["Visual Editing"],
     abbr: "StreamingVD",
     thumbs: [
-      "images/papers/streamingvd/01.jpg"
+      "images/papers/streamingvd/01.webp"
     ],
     description: "An online video diffusion editor that processes long sequences frame-by-frame in a streaming manner.",
     tldr: "The first streaming framework for video editing with diffusion models.",
@@ -255,7 +255,7 @@ window.PAPERS = [
     citations: 17,
     tags: ["Visual Editing"],
     thumbs: [
-      "images/papers/freecompose/01.jpg"
+      "images/papers/freecompose/01.webp"
     ],
     description: "Compose, harmonize and re-light objects across images — zero-shot, with a frozen diffusion prior.",
     tldr: "The first training-free, generic image composition framework built on a frozen diffusion prior.",
@@ -285,7 +285,7 @@ window.PAPERS = [
     tags: ["Visual Generation"],
     abbr: "LLM4GEN",
     thumbs: [
-      "images/papers/llm4gen/01.jpg"
+      "images/papers/llm4gen/01.webp"
     ],
     description: "Plugs the semantic richness of LLMs into text-to-image diffusion for sharper, more compositional outputs.",
     tldr: "Replacing the language module of diffusion models with a larger LLM improves performance.",
@@ -315,7 +315,7 @@ window.PAPERS = [
     citations: 234,
     tags: ["Efficiency"],
     thumbs: [
-      "images/papers/loraprune/01.jpg"
+      "images/papers/loraprune/01.webp"
     ],
     description: "Couples structured pruning with LoRA so that compression and adaptation reinforce each other.",
     tldr: "Repurposes LoRA as the importance indicator for LLM pruning.",
@@ -343,8 +343,8 @@ window.PAPERS = [
     tags: ["Memory", "Long Video Understanding"],
     abbr: "MemDreamer",
     thumbs: [
-      "images/papers/memdreamer/01.jpg",
-      "images/papers/memdreamer/method.jpg"
+      "images/papers/memdreamer/01.webp",
+      "images/papers/memdreamer/method.webp"
     ],
     description: "Turns long-video understanding into agentic exploration — builds a hierarchical graph memory and reasons through it with an Observation–Reason–Action loop, reaching SOTA with just 2% of the full context.",
     bibtex: `@article{chen2026memdreamer,
