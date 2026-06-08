@@ -13,11 +13,8 @@
     return (a.name || "") + star;
   }
 
-  function paperEntry(p, idx) {
+  function paperEntry(p) {
     const links = p.links || {};
-    const titleLink = links.arxiv || links.page || links.code || "#";
-
-    // links: paper / code / page / pdf / hf
     const linkParts = [];
     if (links.arxiv) linkParts.push(`<a href="${links.arxiv}" target="_blank" rel="noopener">[paper]</a>`);
     if (links.pdf)   linkParts.push(`<a href="${links.pdf}"   target="_blank" rel="noopener">[pdf]</a>`);
@@ -53,10 +50,6 @@
 
     const authors = (p.authors || []).map(authorHTML).join(", ");
     const venue = p.venue ? `${p.venue}.` : `${p.year}.`;
-
-    // ----- stats: disabled for now -----
-    const statsHTML = "";
-
     return `
       <div class="paper">
         ${thumbHTML}
@@ -64,7 +57,7 @@
           <p class="paper-title">${p.title}</p>
           <p class="paper-authors">${authors}</p>
           <p class="paper-venue">${venue} ${(p.tags || []).map(t => `<span class="ptag">${t}</span>`).join("")}</p>
-          <p class="paper-links">${linkParts.join(" ")} ${statsHTML}</p>
+          <p class="paper-links">${linkParts.join(" ")}</p>
         </div>
       </div>`;
   }
@@ -100,11 +93,6 @@
     });
   }
 
-  function isAGI(p) {
-    const tags = (p.tags || []).map(t => t.toLowerCase());
-    return tags.some(t => ["llm", "multi-agent", "reasoning", "test-time", "pruning", "peft"].includes(t));
-  }
-
   function isFirstAuthor(p) {
     const a = (p.authors || [])[0];
     return !!(a && typeof a === "object" && a.me);
@@ -126,11 +114,11 @@
       .sort((a, b) => (b.p.citations || 0) - (a.p.citations || 0));
 
     if (firstList) {
-      firstList.innerHTML = first.map(({ p }, idx) => paperEntry(p, idx)).join("");
+      firstList.innerHTML = first.map(({ p }) => paperEntry(p)).join("");
       bindCarousels(firstList);
     }
     if (coList) {
-      coList.innerHTML = co.map(({ p }, idx) => paperEntry(p, idx)).join("");
+      coList.innerHTML = co.map(({ p }) => paperEntry(p)).join("");
       bindCarousels(coList);
     }
   }
@@ -236,7 +224,6 @@
     return sb.from("visitors").upsert({
       ip_hash:   ipHash,
       city:      ipData.city || "Unknown",
-      country:   ipData.country_name || "",
       lat:       parseFloat(ipData.latitude),
       lng:       parseFloat(ipData.longitude),
       continent: ipData.continent_code || guessContinent(parseFloat(ipData.latitude), parseFloat(ipData.longitude)),
@@ -249,14 +236,13 @@
     const sb = getSupabase();
     if (!sb) return Promise.resolve(null);
     return sb.from("visitors")
-      .select("city, country, lat, lng, continent, visit_count")
+      .select("city, lat, lng, continent, visit_count")
       .order("last_seen", { ascending: false })
       .limit(500)
       .then(({ data, error }) => {
         if (error || !data || data.length === 0) return null;
         return data.map(r => ({
           name:      r.city,
-          country:   normalizeCountry(r.country || ""),
           lat:       r.lat,
           lng:       r.lng,
           size:      Math.min(0.9, 0.25 + (r.visit_count || 1) * 0.05),
@@ -275,52 +261,6 @@
     return "v_" + Math.abs(h).toString(36);
   }
 
-  // Normalize country names so Taiwan / HK / Macao all show as "China".
-  function normalizeCountry(c) {
-    if (!c) return "";
-    const s = String(c).trim();
-    if (/^Taiwan/i.test(s) || s === "TW") return "China";
-    if (/^Hong\s*Kong/i.test(s) || s === "HK") return "China";
-    if (/^Mac[ao]o/i.test(s) || s === "MO") return "China";
-    return s;
-  }
-
-  // Fallback: infer country from a known city when the DB record has no country
-  // (early visitors before the country column was filled in).
-  const CITY_TO_COUNTRY = {
-    "Singapore": "Singapore",
-    "Hangzhou": "China", "Beijing": "China", "Shanghai": "China",
-    "Guangzhou": "China", "Shenzhen": "China", "Hong Kong": "China",
-    "Taipei": "China", "Taichung": "China", "Macao": "China",
-    "Tokyo": "Japan", "Osaka": "Japan", "Kyoto": "Japan",
-    "Seoul": "South Korea",
-    "Bangalore": "India", "Mumbai": "India", "Delhi": "India",
-    "Dubai": "United Arab Emirates",
-    "London": "United Kingdom", "Edinburgh": "United Kingdom",
-    "Paris": "France", "Lyon": "France",
-    "Berlin": "Germany", "Munich": "Germany",
-    "Amsterdam": "Netherlands", "Stockholm": "Sweden",
-    "Zurich": "Switzerland", "Geneva": "Switzerland",
-    "Moscow": "Russia",
-    "New York": "United States", "San Francisco": "United States",
-    "Los Angeles": "United States", "Seattle": "United States",
-    "Boston": "United States", "Chicago": "United States",
-    "Pittsburgh": "United States", "Washington": "United States",
-    "Toronto": "Canada", "Montreal": "Canada", "Vancouver": "Canada",
-    "São Paulo": "Brazil", "Sao Paulo": "Brazil",
-    "Buenos Aires": "Argentina",
-    "Sydney": "Australia", "Melbourne": "Australia",
-    "Cape Town": "South Africa"
-  };
-  function inferCountry(city) {
-    if (!city) return "";
-    return CITY_TO_COUNTRY[city] || CITY_TO_COUNTRY[city.replace(/\s+/g, " ").trim()] || "";
-  }
-
-  // ─── Fallback seed (when Supabase is not configured) ──────────────────
-  // Empty on purpose — the globe will only show the current visitor
-  // ("you") until a backend like Supabase is wired up.
-  const VISITOR_SEED = [];
 
   const CONTINENT_NAMES = {
     AS: "Asia", EU: "Europe", NA: "N. America",
@@ -340,7 +280,7 @@
     ];
     const pick = () => palette[Math.floor(Math.random() * palette.length)];
 
-    const list = visitors || VISITOR_SEED;
+    const list = visitors || [];
     const arcs = list
       .filter(c => ARC_TARGETS.includes(c.name))
       .map(c => ({
@@ -393,7 +333,6 @@
         logVisitor(d);
         return {
           name: d.city ? `you · ${d.city}` : "you",
-          country: normalizeCountry(d.country_name || d.country || ""),
           lat, lng,
           size: 1.4,
           you: true,
@@ -425,7 +364,7 @@
 
   function renderContinentStats(points, youContinent) {
     const stats = {};
-    const nested = {};   // continent -> country -> city -> count
+    const byCity = {};   // continent -> city -> count
     points.forEach(p => {
       const c = p.continent || "AS";
       stats[c] = (stats[c] || 0) + 1;
@@ -434,13 +373,8 @@
       // "Unknown" / "you" pills cluttering the panel.
       const rawName = (p.name || "").replace(/^you\s*·\s*/i, "").trim();
       if (!rawName || /^(you|unknown)$/i.test(rawName)) return;
-      const cityName = rawName;
-      let countryName = (p.country || "").trim();
-      if (!countryName) countryName = normalizeCountry(inferCountry(cityName));
-      if (!countryName) countryName = "Unknown";
-      nested[c] = nested[c] || {};
-      nested[c][countryName] = nested[c][countryName] || {};
-      nested[c][countryName][cityName] = (nested[c][countryName][cityName] || 0) + 1;
+      byCity[c] = byCity[c] || {};
+      byCity[c][rawName] = (byCity[c][rawName] || 0) + 1;
     });
     const el = document.getElementById("continentStats");
     if (!el) return Object.keys(stats).length;
@@ -468,20 +402,12 @@
           }
           btn.classList.add("is-active");
           btn.setAttribute("aria-expanded", "true");
-          const byCountry = nested[c] || {};
-          // Flatten to a single list of {country, city, count}, sort by count desc.
-          const items = [];
-          Object.keys(byCountry).forEach(country => {
-            const dict = byCountry[country];
-            Object.keys(dict).forEach(city => {
-              items.push({ country, city, count: dict[city] });
-            });
-          });
-          items.sort((a, b) => b.count - a.count);
+          const dict = byCity[c] || {};
+          const cities = Object.keys(dict).sort((a, b) => dict[b] - dict[a]);
           panel.innerHTML = `<span class="cont-cities-label">${CONTINENT_NAMES[c]}:</span> ` +
-            items.map(it => {
-              const cnt = it.count > 1 ? ` ×${it.count}` : "";
-              return `<span class="cc-pill">${it.city}${cnt}</span>`;
+            cities.map(city => {
+              const cnt = dict[city] > 1 ? ` ×${dict[city]}` : "";
+              return `<span class="cc-pill">${city}${cnt}</span>`;
             }).join(" ");
           panel.removeAttribute("hidden");
         });
@@ -527,7 +453,7 @@
     }
     el.innerHTML = "";
 
-    const visitors = _realVisitors || VISITOR_SEED;
+    const visitors = _realVisitors || [];
     const points = visitors.concat([youPoint]);
 
     // Real Earth texture + atmosphere glow, pulsating rings on visitors,
@@ -657,7 +583,7 @@
     const set = (id, v) => { const e = document.getElementById(id); if (e) e.textContent = v; };
     const continentCount = renderContinentStats(points, youPoint.continent);
     set("visitorCount", points.length);
-    set("countryCount", continentCount);
+    set("continentCount", continentCount);
   }
 
   document.addEventListener("DOMContentLoaded", function () {
