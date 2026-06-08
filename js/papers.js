@@ -27,7 +27,13 @@ window.PAPERS = [
       "images/papers/streamma/01.jpg"
     ],
     description: "A streaming protocol that lets reasoning agents talk while they think — faster, cheaper, and more accurate.",
-    tldr: "Streaming reasoning steps between multi-agents makes the pipeline both faster and more accurate, and reveals a new step-level scaling law."
+    tldr: "Streaming reasoning steps between multi-agents makes the pipeline both faster and more accurate, and reveals a new step-level scaling law.",
+    bibtex: `@article{yang2026streaming,
+  title={Streaming Communication in Multi-Agent Reasoning},
+  author={Yang, Zhen and Xu, Xiaogang and Wang, Wen and Chen, Cong and Xu, Xander and Chen, Ying-Cong},
+  journal={arXiv preprint arXiv:2606.05158},
+  year={2026}
+}`
   },
   {
     title: "Less is More: Improving LLM Reasoning with Minimal Test-Time Intervention",
@@ -48,7 +54,13 @@ window.PAPERS = [
       "images/papers/mti/01.jpg"
     ],
     description: "We show a tiny test-time nudge — applied at the right token, at the right moment — beats heavy retraining for LLM reasoning.",
-    tldr: "Less intervention, better reasoning: MTI intervenes only on high-entropy tokens to improve LLM reasoning with minimal computation."
+    tldr: "Less intervention, better reasoning: MTI intervenes only on high-entropy tokens to improve LLM reasoning with minimal computation.",
+    bibtex: `@article{yang2025less,
+  title={Less is More: Improving LLM Reasoning with Minimal Test-Time Intervention},
+  author={Yang, Zhen and Zhang, Mingyang and Chen, Feng and Ding, Ganggui and Hou, Liang and Tao, Xin and Chen, Ying-Cong},
+  journal={arXiv preprint arXiv:2510.13940},
+  year={2025}
+}`
   },
   {
     title: "RectifiedHR: Enable Efficient High-Resolution Synthesis via Energy Rectification",
@@ -74,7 +86,14 @@ window.PAPERS = [
     ],
     tags: ["Visual Generation"],
     description: "A training-free recipe for crisp, high-resolution diffusion outputs — by rectifying the latent energy along the denoising trajectory.",
-    tldr: "Makes training-free high-resolution synthesis faster, better, and more elegant."
+    tldr: "Makes training-free high-resolution synthesis faster, better, and more elegant.",
+    bibtex: `@inproceedings{yang2026rectifiedhr,
+  title={RectifiedHR: Enable Efficient High-Resolution Synthesis via Energy Rectification},
+  author={Yang, Zhen and Shen, Guibao and Li, Minyang and Hou, Liang and Liu, Mushui and Wang, Luozhou and Tao, Xin and Chen, Ying-Cong},
+  booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
+  pages={3809--3819},
+  year={2026}
+}`
   },
   {
     title: "Object-aware Inversion and Reassembly for Image Editing",
@@ -98,7 +117,15 @@ window.PAPERS = [
       "images/papers/oir/method.jpg"
     ],
     description: "Decouples multi-object editing into per-object inversions, then reassembles — letting each edit speak without interfering.",
-    tldr: "Editing tasks differ in difficulty; OIR is the first inversion-based method to achieve superior multi-object editing."
+    tldr: "Editing tasks differ in difficulty; OIR is the first inversion-based method to achieve superior multi-object editing.",
+    bibtex: `@inproceedings{yang2024object,
+  title={Object-aware inversion and reassembly for image editing},
+  author={Yang, Zhen and Ding, Ganggui and Wang, Wen and Chen, Hao and Zhuang, Bohan and Shen, Chunhua},
+  booktitle={International Conference on Learning Representations},
+  volume={2024},
+  pages={50839--50862},
+  year={2024}
+}`
   },
   {
     title: "FreeCustom: Tuning-Free Customized Image Generation for Multi-Concept Composition",
@@ -120,7 +147,14 @@ window.PAPERS = [
       "images/papers/freecustom/01.jpg"
     ],
     description: "Tuning-free, reference-driven multi-concept image generation. Extended to video in IJCV 2025 (FreerCustom).",
-    tldr: "The first training-free customization method using a single reference image."
+    tldr: "The first training-free customization method using a single reference image.",
+    bibtex: `@inproceedings{ding2024freecustom,
+  title={Freecustom: Tuning-free customized image generation for multi-concept composition},
+  author={Ding, Ganggui and Zhao, Canyu and Wang, Wen and Yang, Zhen and Liu, Zide and Chen, Hao and Shen, Chunhua},
+  booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
+  pages={9089--9098},
+  year={2024}
+}`
   },
   {
     title: "StereoPilot: Learning Unified and Efficient Stereo Conversion via Generative Priors",
@@ -141,7 +175,13 @@ window.PAPERS = [
     thumbs: [
       "images/papers/stereopilot/01.jpg"
     ],
-    description: "Turns any 2D video into high-quality 3D stereo in a single step using generative priors."
+    description: "Turns any 2D video into high-quality 3D stereo in a single step using generative priors.",
+    bibtex: `@article{shen2025stereopilot,
+  title={StereoPilot: Learning Unified and Efficient Stereo Conversion via Generative Priors},
+  author={Shen, Guibao and Du, Yihua and Ge, Wenhang and He, Jing and Chang, Chirui and Zhou, Donghao and Yang, Zhen and Wang, Luozhou and Tao, Xin and Chen, Ying-Cong},
+  journal={arXiv preprint arXiv:2512.16915},
+  year={2025}
+}`
   },
   {
     title: "FlexPainter: Flexible and Multi-View Consistent Texture Generation",
@@ -163,7 +203,13 @@ window.PAPERS = [
       "images/papers/flexpainter/01.jpg",
       "images/papers/flexpainter/method.jpg"
     ],
-    description: "Multi-view consistent texture synthesis for 3D meshes — flexible inputs, harmonized outputs."
+    description: "Multi-view consistent texture synthesis for 3D meshes — flexible inputs, harmonized outputs.",
+    bibtex: `@article{yan2025flexpainter,
+  title={FlexPainter: Flexible and Multi-View Consistent Texture Generation},
+  author={Yan, Dongyu and Wu, Leyi and Lin, Jiantao and Wang, Luozhou and Xu, Tianshuo and Chen, Zhifei and Yang, Zhen and Xu, Lie and Zhang, Shunsi and Chen, Yingcong},
+  journal={arXiv preprint arXiv:2506.02620},
+  year={2025}
+}`
   },
   {
     title: "Streaming Video Diffusion: Online Video Editing with Diffusion Models",
@@ -185,7 +231,13 @@ window.PAPERS = [
       "images/papers/streamingvd/01.jpg"
     ],
     description: "An online video diffusion editor that processes long sequences frame-by-frame in a streaming manner.",
-    tldr: "The first streaming framework for video editing with diffusion models."
+    tldr: "The first streaming framework for video editing with diffusion models.",
+    bibtex: `@article{chen2024streaming,
+  title={Streaming Video Diffusion: Online Video Editing with Diffusion Models},
+  author={Chen, Feng and Yang, Zhen and Zhuang, Bohan and Wu, Qi},
+  journal={arXiv preprint arXiv:2405.19726},
+  year={2024}
+}`
   },
   {
     title: "FreeCompose: Generic Zero-Shot Image Composition with Diffusion Prior",
@@ -206,7 +258,15 @@ window.PAPERS = [
       "images/papers/freecompose/01.jpg"
     ],
     description: "Compose, harmonize and re-light objects across images — zero-shot, with a frozen diffusion prior.",
-    tldr: "The first training-free, generic image composition framework built on a frozen diffusion prior."
+    tldr: "The first training-free, generic image composition framework built on a frozen diffusion prior.",
+    bibtex: `@inproceedings{chen2024freecompose,
+  title={Freecompose: Generic zero-shot image composition with diffusion prior},
+  author={Chen, Zhekai and Wang, Wen and Yang, Zhen and Yuan, Zeqing and Chen, Hao and Shen, Chunhua},
+  booktitle={European Conference on Computer Vision},
+  pages={70--87},
+  year={2024},
+  organization={Springer}
+}`
   },
   {
     title: "LLM4GEN: Leveraging Semantic Representation of LLMs for Text-to-Image Generation",
@@ -228,7 +288,16 @@ window.PAPERS = [
       "images/papers/llm4gen/01.jpg"
     ],
     description: "Plugs the semantic richness of LLMs into text-to-image diffusion for sharper, more compositional outputs.",
-    tldr: "Replacing the language module of diffusion models with a larger LLM improves performance."
+    tldr: "Replacing the language module of diffusion models with a larger LLM improves performance.",
+    bibtex: `@inproceedings{liu2025llm4gen,
+  title={Llm4gen: Leveraging semantic representation of llms for text-to-image generation},
+  author={Liu, Mushui and Ma, Yuhang and Yang, Zhen and Dan, Jun and Yu, Yunlong and Zhao, Zeng and Hu, Zhipeng and Liu, Bai and Fan, Changjie},
+  booktitle={Proceedings of the AAAI conference on Artificial Intelligence},
+  volume={39},
+  number={5},
+  pages={5523--5531},
+  year={2025}
+}`
   },
   {
     title: "LoRAPrune: Structured Pruning Meets Low-Rank Parameter-Efficient Fine-Tuning",
@@ -249,7 +318,14 @@ window.PAPERS = [
       "images/papers/loraprune/01.jpg"
     ],
     description: "Couples structured pruning with LoRA so that compression and adaptation reinforce each other.",
-    tldr: "Repurposes LoRA as the importance indicator for LLM pruning."
+    tldr: "Repurposes LoRA as the importance indicator for LLM pruning.",
+    bibtex: `@inproceedings{zhang2024loraprune,
+  title={Loraprune: Structured pruning meets low-rank parameter-efficient fine-tuning},
+  author={Zhang, Mingyang and Chen, Hao and Shen, Chunhua and Yang, Zhen and Ou, Linlin and Yu, Xinyi and Zhuang, Bohan},
+  booktitle={Findings of the Association for Computational Linguistics: ACL 2024},
+  pages={3013--3026},
+  year={2024}
+}`
   },
   {
     title: "MemDreamer: Decoupling Perception and Reasoning for Long Video Understanding via Hierarchical Graph Memory and Agentic Retrieval Mechanism",
@@ -270,6 +346,12 @@ window.PAPERS = [
       "images/papers/memdreamer/01.jpg",
       "images/papers/memdreamer/method.jpg"
     ],
-    description: "Turns long-video understanding into agentic exploration — builds a hierarchical graph memory and reasons through it with an Observation–Reason–Action loop, reaching SOTA with just 2% of the full context."
+    description: "Turns long-video understanding into agentic exploration — builds a hierarchical graph memory and reasons through it with an Observation–Reason–Action loop, reaching SOTA with just 2% of the full context.",
+    bibtex: `@article{chen2026memdreamer,
+  title={MemDreamer: Decoupling Perception and Reasoning for Long Video Understanding via Hierarchical Graph Memory and Agentic Retrieval Mechanism},
+  author={Chen, Cong and Gan, Guo and Ji, Kaixiang and Zhang, ChaoYang and Yang, Zhen and Yao, Guangming and Chen, Hao and Chen, Jingdong and Yuan, Yi and Shen, Chunhua},
+  journal={arXiv preprint arXiv:2606.07512},
+  year={2026}
+}`
   },
 ];
