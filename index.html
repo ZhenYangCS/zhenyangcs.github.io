@@ -24,7 +24,7 @@
       }
     })();
   </script>
-  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/style.css?v=6" />
 </head>
 <body>
 
@@ -85,12 +85,11 @@
     </div>
     <div class="header-photo">
       <div class="avatar-wrap">
-        <img class="avatar-default" src="images/avatar.jpg" alt="Zhen Yang" />
-        <img class="avatar-hover" src="images/avatar-hover.jpg" alt="Zhen Yang as a kid" />
+        <img class="avatar-default" src="images/avatar.jpg" alt="Zhen Yang" decoding="async" fetchpriority="high" />
+        <img class="avatar-hover" src="images/avatar-hover.jpg" alt="Zhen Yang as a kid" decoding="async" loading="lazy" />
       </div>
-      <button class="avatar-toggle" id="avatarToggle" type="button" aria-pressed="false" title="Time machine">
+      <button class="avatar-toggle" id="avatarToggle" type="button" aria-pressed="false" title="✨" aria-label="Toggle childhood photo">
         <span class="avatar-toggle-icon">✨</span>
-        <span class="avatar-toggle-label">Make me younger</span>
       </button>
     </div>
   </div>
@@ -118,7 +117,7 @@
   <h2>Industry Experience</h2>
   <div class="experience">
     <div class="exp-item">
-      <img class="exp-logo" src="images/logos/alibaba.png" alt="Alibaba" />
+      <img class="exp-logo" src="images/logos/alibaba.png" alt="Alibaba" loading="lazy" decoding="async" />
       <div class="exp-content">
         <h3>Alibaba</h3>
         <span class="role">Research Intern</span>
@@ -127,7 +126,7 @@
       </div>
     </div>
     <div class="exp-item">
-      <img class="exp-logo" src="images/logos/antgroup.png" alt="Ant Group" />
+      <img class="exp-logo" src="images/logos/antgroup.png" alt="Ant Group" loading="lazy" decoding="async" />
       <div class="exp-content">
         <h3>Ant Group, Bailing</h3>
         <span class="role">Research Intern</span>
@@ -136,7 +135,7 @@
       </div>
     </div>
     <div class="exp-item">
-      <img class="exp-logo" src="images/logos/kling.png" alt="KuaiShou Kling" />
+      <img class="exp-logo" src="images/logos/kling.png" alt="KuaiShou Kling" loading="lazy" decoding="async" />
       <div class="exp-content">
         <h3>KuaiShou, Kling</h3>
         <span class="role">Research Intern</span>
@@ -145,7 +144,7 @@
       </div>
     </div>
     <div class="exp-item">
-      <img class="exp-logo" src="images/logos/megvii.png" alt="MEGVII" />
+      <img class="exp-logo" src="images/logos/megvii.png" alt="MEGVII" loading="lazy" decoding="async" />
       <div class="exp-content">
         <h3>MEGVII Research</h3>
         <span class="role">Research Intern</span>
@@ -154,7 +153,7 @@
       </div>
     </div>
     <div class="exp-item">
-      <img class="exp-logo" src="images/logos/hulu.png" alt="Hulu" />
+      <img class="exp-logo" src="images/logos/hulu.png" alt="Hulu" loading="lazy" decoding="async" />
       <div class="exp-content">
         <h3>Hulu (Disney)</h3>
         <span class="role">SDE Intern</span>
@@ -175,36 +174,45 @@
 
 </div><!-- /#content -->
 
-<!-- ============ Visitors Globe (dark) ============ -->
+<!-- ============ Visitors Globe (powered by Supabase) ============ -->
 <section id="visitors">
   <div class="visitor-inner">
-    <div id="globe-stage">
-      <div id="globeViz"></div>
-    </div>
-    <p class="globe-caption"><span id="visitorCount">·</span> visitors across <span id="countryCount">·</span> continents</p>
-    <p class="globe-caption-stats" id="continentStats"></p>
-
-    <!-- Real-IP statistics via Flag Counter (img loads on every visit and bumps the count).
-         Replace YOUR_ID after grabbing a snippet from https://www.flagcounter.com/ ,
-         then remove the `hidden` attribute on the .flag-section below. -->
-    <div class="flag-section" hidden>
-      <button class="flag-toggle" id="flagToggle" type="button" aria-expanded="false" aria-controls="flagCounterPanel">
-        <span>Where are visitors from?</span>
-        <svg viewBox="0 0 12 8" width="10" height="7" aria-hidden="true">
-          <path d="M1 1.5 6 6.5 11 1.5" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </button>
-      <div class="flag-panel" id="flagCounterPanel">
-        <a href="https://info.flagcounter.com/YOUR_ID" target="_blank" rel="noopener">
-          <img src="https://s01.flagcounter.com/count2/YOUR_ID/bg_FFFFFF/txt_000000/border_CCCCCC/columns_8/maxflags_248/viewers_3/labels_1/pageviews_1/flags_0/percent_0/"
-               alt="Flag Counter" border="0" />
-        </a>
+    <div class="globe-panel" id="globePanel" hidden>
+      <div id="globe-stage">
+        <div id="globeViz"></div>
       </div>
+      <p class="globe-caption"><span id="visitorCount">·</span> visitors across <span id="countryCount">·</span> continents</p>
+      <p class="globe-caption-stats" id="continentStats"></p>
+      <div class="cont-cities" id="continentCities" hidden></div>
     </div>
+
+    <!--
+      ============================================================
+      【Backup】 MapMyVisitors zero-config widget (currently disabled)
+      To switch from Supabase → MapMyVisitors:
+        1. Delete / hide the #globe-stage block above and the
+           .globe-caption / continent-stats paragraphs.
+        2. Uncomment the block below.
+        3. Optionally drop the 3 CDN scripts (supabase / globe.gl /
+           topojson) at the bottom — they will no longer be needed.
+      ============================================================
+
+      <div class="mmv-frame">
+        <script type="text/javascript" id="mapmyvisitors"
+                src="https://mapmyvisitors.com/map.js?d=rVWTWluWGdq-MuxnhqomD3VmfDk0x8OSeW8_S3gqAvw&cl=ffffff&w=a"></script>
+        <noscript>
+          <a href="https://mapmyvisitors.com/web/rVWTWluWGdq-MuxnhqomD3VmfDk0x8OSeW8_S3gqAvw" target="_blank" rel="noopener">
+            <img src="https://mapmyvisitors.com/map.png?d=rVWTWluWGdq-MuxnhqomD3VmfDk0x8OSeW8_S3gqAvw&cl=ffffff" alt="Visitor map" />
+          </a>
+        </noscript>
+      </div>
+    -->
   </div>
-  <p class="footer-line">
-    © <span id="year"></span> Zhen Yang.
-  </p>
+  <button class="footer-line" id="globeToggle" type="button" aria-expanded="false" aria-controls="globePanel" aria-label="Toggle visitors globe">
+    <span class="footer-tree">🌳</span>
+    <span class="footer-name">Zhen Yang</span>
+    <span class="footer-tree">🌳</span>
+  </button>
 </section>
 
 <!-- Scripts -->
@@ -212,7 +220,7 @@
 <script src="https://unpkg.com/globe.gl@2.32.6/dist/globe.gl.min.js"></script>
 <script src="https://unpkg.com/topojson-client@3"></script>
 <script src="js/papers.js?v=3"></script>
-<script src="js/main.js?v=9"></script>
+<script src="js/main.js?v=24"></script>
 </body>
 </html>
 

@@ -135,11 +135,6 @@
     }
   }
 
-  function setYear() {
-    const el = document.getElementById("year");
-    if (el) el.textContent = new Date().getFullYear();
-  }
-
   // ----- Theme toggle ------------------------------------------------------
   // Default = dark. Click flips to light. Choice persists in localStorage.
   // The globe is re-rendered with theme-specific texture & lighting on toggle.
@@ -254,13 +249,14 @@
     const sb = getSupabase();
     if (!sb) return Promise.resolve(null);
     return sb.from("visitors")
-      .select("city, lat, lng, continent, visit_count")
+      .select("city, country, lat, lng, continent, visit_count")
       .order("last_seen", { ascending: false })
       .limit(500)
       .then(({ data, error }) => {
         if (error || !data || data.length === 0) return null;
         return data.map(r => ({
           name:      r.city,
+          country:   normalizeCountry(r.country || ""),
           lat:       r.lat,
           lng:       r.lng,
           size:      Math.min(0.9, 0.25 + (r.visit_count || 1) * 0.05),
@@ -277,6 +273,48 @@
       h = ((h << 5) - h + str.charCodeAt(i)) | 0;
     }
     return "v_" + Math.abs(h).toString(36);
+  }
+
+  // Normalize country names so Taiwan / HK / Macao all show as "China".
+  function normalizeCountry(c) {
+    if (!c) return "";
+    const s = String(c).trim();
+    if (/^Taiwan/i.test(s) || s === "TW") return "China";
+    if (/^Hong\s*Kong/i.test(s) || s === "HK") return "China";
+    if (/^Mac[ao]o/i.test(s) || s === "MO") return "China";
+    return s;
+  }
+
+  // Fallback: infer country from a known city when the DB record has no country
+  // (early visitors before the country column was filled in).
+  const CITY_TO_COUNTRY = {
+    "Singapore": "Singapore",
+    "Hangzhou": "China", "Beijing": "China", "Shanghai": "China",
+    "Guangzhou": "China", "Shenzhen": "China", "Hong Kong": "China",
+    "Taipei": "China", "Taichung": "China", "Macao": "China",
+    "Tokyo": "Japan", "Osaka": "Japan", "Kyoto": "Japan",
+    "Seoul": "South Korea",
+    "Bangalore": "India", "Mumbai": "India", "Delhi": "India",
+    "Dubai": "United Arab Emirates",
+    "London": "United Kingdom", "Edinburgh": "United Kingdom",
+    "Paris": "France", "Lyon": "France",
+    "Berlin": "Germany", "Munich": "Germany",
+    "Amsterdam": "Netherlands", "Stockholm": "Sweden",
+    "Zurich": "Switzerland", "Geneva": "Switzerland",
+    "Moscow": "Russia",
+    "New York": "United States", "San Francisco": "United States",
+    "Los Angeles": "United States", "Seattle": "United States",
+    "Boston": "United States", "Chicago": "United States",
+    "Pittsburgh": "United States", "Washington": "United States",
+    "Toronto": "Canada", "Montreal": "Canada", "Vancouver": "Canada",
+    "São Paulo": "Brazil", "Sao Paulo": "Brazil",
+    "Buenos Aires": "Argentina",
+    "Sydney": "Australia", "Melbourne": "Australia",
+    "Cape Town": "South Africa"
+  };
+  function inferCountry(city) {
+    if (!city) return "";
+    return CITY_TO_COUNTRY[city] || CITY_TO_COUNTRY[city.replace(/\s+/g, " ").trim()] || "";
   }
 
   // ─── Fallback seed (when Supabase is not configured) ──────────────────
@@ -355,6 +393,7 @@
         logVisitor(d);
         return {
           name: d.city ? `you · ${d.city}` : "you",
+          country: normalizeCountry(d.country_name || d.country || ""),
           lat, lng,
           size: 1.4,
           you: true,
@@ -386,9 +425,22 @@
 
   function renderContinentStats(points, youContinent) {
     const stats = {};
+    const nested = {};   // continent -> country -> city -> count
     points.forEach(p => {
       const c = p.continent || "AS";
       stats[c] = (stats[c] || 0) + 1;
+      // Records WITHOUT a real city name still count toward the continent total
+      // above, but are skipped from the city pill list below to avoid lonely
+      // "Unknown" / "you" pills cluttering the panel.
+      const rawName = (p.name || "").replace(/^you\s*·\s*/i, "").trim();
+      if (!rawName || /^(you|unknown)$/i.test(rawName)) return;
+      const cityName = rawName;
+      let countryName = (p.country || "").trim();
+      if (!countryName) countryName = normalizeCountry(inferCountry(cityName));
+      if (!countryName) countryName = "Unknown";
+      nested[c] = nested[c] || {};
+      nested[c][countryName] = nested[c][countryName] || {};
+      nested[c][countryName][cityName] = (nested[c][countryName][cityName] || 0) + 1;
     });
     const el = document.getElementById("continentStats");
     if (!el) return Object.keys(stats).length;
@@ -396,9 +448,45 @@
       .filter(c => stats[c])
       .map(c => {
         const isYou = c === youContinent ? " is-you" : "";
-        return `<span class="cont-stat${isYou}" data-c="${c}">${CONTINENT_NAMES[c]} <em>${stats[c]}</em></span>`;
+        return `<button type="button" class="cont-stat${isYou}" data-c="${c}" aria-expanded="false">${CONTINENT_NAMES[c]} <em>${stats[c]}</em></button>`;
       })
       .join("");
+    const panel = document.getElementById("continentCities");
+    if (panel) {
+      el.querySelectorAll(".cont-stat").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const c = btn.dataset.c;
+          const wasOpen = btn.classList.contains("is-active");
+          el.querySelectorAll(".cont-stat.is-active").forEach(b => {
+            b.classList.remove("is-active");
+            b.setAttribute("aria-expanded", "false");
+          });
+          if (wasOpen) {
+            panel.setAttribute("hidden", "");
+            panel.innerHTML = "";
+            return;
+          }
+          btn.classList.add("is-active");
+          btn.setAttribute("aria-expanded", "true");
+          const byCountry = nested[c] || {};
+          // Flatten to a single list of {country, city, count}, sort by count desc.
+          const items = [];
+          Object.keys(byCountry).forEach(country => {
+            const dict = byCountry[country];
+            Object.keys(dict).forEach(city => {
+              items.push({ country, city, count: dict[city] });
+            });
+          });
+          items.sort((a, b) => b.count - a.count);
+          panel.innerHTML = `<span class="cont-cities-label">${CONTINENT_NAMES[c]}:</span> ` +
+            items.map(it => {
+              const cnt = it.count > 1 ? ` ×${it.count}` : "";
+              return `<span class="cc-pill">${it.city}${cnt}</span>`;
+            }).join(" ");
+          panel.removeAttribute("hidden");
+        });
+      });
+    }
     return Object.keys(stats).length;
   }
 
@@ -573,30 +661,38 @@
   }
 
   document.addEventListener("DOMContentLoaded", function () {
-    setYear();
     renderPapers();
     initTheme();
-    initGlobe();
-    var _flagBtn = document.getElementById("flagToggle");
-    var _flagPanel = document.getElementById("flagCounterPanel");
-    if (_flagBtn && _flagPanel) {
-      _flagBtn.addEventListener("click", function () {
-        var open = _flagPanel.classList.toggle("is-open");
-        _flagBtn.setAttribute("aria-expanded", open ? "true" : "false");
+
+    // 🌍 Lazy-load the globe only when the user clicks the toggle.
+    var _globeBtn   = document.getElementById("globeToggle");
+    var _globePanel = document.getElementById("globePanel");
+    var _globeInited = false;
+    if (_globeBtn && _globePanel) {
+      _globeBtn.addEventListener("click", function () {
+        var open = _globePanel.hasAttribute("hidden");
+        if (open) {
+          _globePanel.removeAttribute("hidden");
+          _globeBtn.setAttribute("aria-expanded", "true");
+          if (!_globeInited) {
+            _globeInited = true;
+            // Wait one frame so the panel has real dimensions before three.js measures it.
+            requestAnimationFrame(initGlobe);
+          }
+        } else {
+          _globePanel.setAttribute("hidden", "");
+          _globeBtn.setAttribute("aria-expanded", "false");
+        }
       });
     }
 
-    // ✨ Time-machine button — toggles the avatar between adult and childhood photo.
-    var _avatarBtn = document.getElementById("avatarToggle");
-    var _avatarLabel = _avatarBtn ? _avatarBtn.querySelector(".avatar-toggle-label") : null;
+    // ✨ Time-machine star — toggles the avatar between adult and childhood photo.
+    var _avatarBtn  = document.getElementById("avatarToggle");
     var _avatarWrap = document.querySelector(".avatar-wrap");
     if (_avatarBtn && _avatarWrap) {
       _avatarBtn.addEventListener("click", function () {
         var young = _avatarWrap.classList.toggle("is-young");
         _avatarBtn.setAttribute("aria-pressed", young ? "true" : "false");
-        if (_avatarLabel) {
-          _avatarLabel.textContent = young ? "Bring me back" : "Make me younger";
-        }
       });
     }
   });
