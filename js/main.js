@@ -152,15 +152,38 @@
       dots.forEach(d => d.addEventListener("click", e => {
         e.stopPropagation(); show(parseInt(d.dataset.i, 10));
       }));
-      // touch swipe
-      let sx = null;
-      c.addEventListener("touchstart", e => { sx = e.touches[0].clientX; }, { passive: true });
-      c.addEventListener("touchend", e => {
-        if (sx == null) return;
-        const dx = e.changedTouches[0].clientX - sx;
-        if (Math.abs(dx) > 30) show(i + (dx < 0 ? 1 : -1));
-        sx = null;
+      // Drag-to-swipe (mouse / touch / pen) via Pointer Events.
+      let sx = null, sy = null, dragging = false;
+      const SWIPE_THRESHOLD = 30;
+      c.addEventListener("pointerdown", e => {
+        if (e.pointerType === "mouse" && e.button !== 0) return;
+        // Let inner controls (arrows, dots) keep their native click behavior.
+        if (e.target.closest(".cr-arrow, .cr-dot")) return;
+        sx = e.clientX; sy = e.clientY; dragging = true;
+        c.classList.add("is-grabbing");
+        try { c.setPointerCapture(e.pointerId); } catch (_) {}
       });
+      c.addEventListener("pointermove", e => {
+        if (!dragging || sx == null) return;
+        const dx = e.clientX - sx, dy = e.clientY - sy;
+        // Once the gesture is clearly horizontal, suppress text / image selection.
+        if (Math.abs(dx) > 6 && Math.abs(dx) > Math.abs(dy) && e.cancelable) e.preventDefault();
+      });
+      const endDrag = (e) => {
+        if (!dragging) return;
+        const dx = (sx == null) ? 0 : (e.clientX - sx);
+        const dy = (sy == null) ? 0 : (e.clientY - sy);
+        if (Math.abs(dx) > SWIPE_THRESHOLD && Math.abs(dx) > Math.abs(dy)) {
+          show(i + (dx < 0 ? 1 : -1));
+        }
+        sx = sy = null; dragging = false;
+        c.classList.remove("is-grabbing");
+        try { c.releasePointerCapture(e.pointerId); } catch (_) {}
+      };
+      c.addEventListener("pointerup", endDrag);
+      c.addEventListener("pointercancel", endDrag);
+      // Block the browser's native image drag so it doesn't hijack the swipe.
+      c.addEventListener("dragstart", e => e.preventDefault());
     });
   }
 

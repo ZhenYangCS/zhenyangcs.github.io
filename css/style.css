@@ -465,6 +465,17 @@ img { max-width: 100%; }
 }
 
 /* ----------- Carousel (lightweight, only when multi) ----------- */
+.paper-thumb.carousel {
+  cursor: grab;
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.paper-thumb.carousel.is-grabbing { cursor: grabbing; }
+.paper-thumb.carousel img {
+  -webkit-user-drag: none;
+  user-drag: none;
+}
 .cr-track {
   position: absolute;
   inset: 0;
