@@ -6,6 +6,15 @@
 (function () {
   "use strict";
 
+  let _paperUid = 0;
+
+  function escapeHTML(s) {
+    return String(s)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;");
+  }
+
   function authorHTML(a) {
     if (typeof a === "string") return a;
     const star = a && a.equal ? `<sup class="eq">*</sup>` : "";
@@ -16,10 +25,10 @@
   function paperEntry(p) {
     const links = p.links || {};
     const linkParts = [];
-    if (links.arxiv) linkParts.push(`<a href="${links.arxiv}" target="_blank" rel="noopener">[paper]</a>`);
-    if (links.pdf)   linkParts.push(`<a href="${links.pdf}"   target="_blank" rel="noopener">[pdf]</a>`);
-    if (links.code)  linkParts.push(`<a href="${links.code}"  target="_blank" rel="noopener">[code]</a>`);
-    if (links.page)  linkParts.push(`<a href="${links.page}"  target="_blank" rel="noopener">[project page]</a>`);
+    if (links.arxiv) linkParts.push(`<a href="${links.arxiv}" target="_blank" rel="noopener">Paper</a>`);
+    if (links.pdf)   linkParts.push(`<a href="${links.pdf}"   target="_blank" rel="noopener">PDF</a>`);
+    if (links.code)  linkParts.push(`<a href="${links.code}"  target="_blank" rel="noopener">Code</a>`);
+    if (links.page)  linkParts.push(`<a href="${links.page}"  target="_blank" rel="noopener">Project Page</a>`);
 
     // thumbnail / carousel
     const thumbs = (p.thumbs && p.thumbs.length) ? p.thumbs : (p.thumb ? [p.thumb] : []);
@@ -50,6 +59,20 @@
 
     const authors = (p.authors || []).map(authorHTML).join(", ");
     const venue = p.venue ? `${p.venue}.` : `${p.year}.`;
+
+    // Collapsible details: TLDR (uses p.tldr) + BibTeX (uses p.bibtex)
+    const tldrId = `tldr-${++_paperUid}`;
+    const bibId  = `bib-${_paperUid}`;
+    const details = [];
+    if (p.tldr) {
+      linkParts.push(`<button class="paper-toggle" type="button" data-target="${tldrId}" aria-expanded="false">TLDR <span class="toggle-arrow">▾</span></button>`);
+      details.push(`<div id="${tldrId}" class="paper-detail tldr" hidden>${escapeHTML(p.tldr)}</div>`);
+    }
+    if (p.bibtex) {
+      linkParts.push(`<button class="paper-toggle" type="button" data-target="${bibId}" aria-expanded="false">BibTeX <span class="toggle-arrow">▾</span></button>`);
+      details.push(`<div id="${bibId}" class="paper-detail bib" hidden><button class="bib-copy" type="button" title="Copy BibTeX" aria-label="Copy">⧉</button><pre>${escapeHTML(p.bibtex)}</pre></div>`);
+    }
+
     return `
       <div class="paper">
         ${thumbHTML}
@@ -58,8 +81,56 @@
           <p class="paper-authors">${authors}</p>
           <p class="paper-venue">${venue} ${(p.tags || []).map(t => `<span class="ptag">${t}</span>`).join("")}</p>
           <p class="paper-links">${linkParts.join(" ")}</p>
+          ${details.join("")}
         </div>
       </div>`;
+  }
+
+  function bindPaperDetails(root) {
+    root.addEventListener("click", (e) => {
+      const toggleBtn = e.target.closest(".paper-toggle");
+      const copyBtn   = e.target.closest(".bib-copy");
+      if (toggleBtn) {
+        e.preventDefault();
+        const id = toggleBtn.dataset.target;
+        const target = document.getElementById(id);
+        if (!target) return;
+        const paper = toggleBtn.closest(".paper");
+        // Mutual exclusion: collapse the other detail panel inside the same paper.
+        paper.querySelectorAll(".paper-detail").forEach(d => {
+          if (d !== target) d.setAttribute("hidden", "");
+        });
+        paper.querySelectorAll(".paper-toggle").forEach(b => {
+          if (b !== toggleBtn) {
+            b.classList.remove("is-open");
+            b.setAttribute("aria-expanded", "false");
+          }
+        });
+        const willOpen = target.hasAttribute("hidden");
+        if (willOpen) {
+          target.removeAttribute("hidden");
+          toggleBtn.classList.add("is-open");
+          toggleBtn.setAttribute("aria-expanded", "true");
+        } else {
+          target.setAttribute("hidden", "");
+          toggleBtn.classList.remove("is-open");
+          toggleBtn.setAttribute("aria-expanded", "false");
+        }
+      } else if (copyBtn) {
+        e.preventDefault();
+        const pre = copyBtn.parentElement.querySelector("pre");
+        if (!pre || !navigator.clipboard) return;
+        navigator.clipboard.writeText(pre.textContent).then(() => {
+          const original = copyBtn.textContent;
+          copyBtn.textContent = "\u2713";
+          copyBtn.classList.add("is-copied");
+          setTimeout(() => {
+            copyBtn.textContent = original;
+            copyBtn.classList.remove("is-copied");
+          }, 1200);
+        });
+      }
+    });
   }
 
   function bindCarousels(root) {
@@ -121,10 +192,12 @@
     if (firstList) {
       firstList.innerHTML = first.map(({ p }) => paperEntry(p)).join("");
       bindCarousels(firstList);
+      bindPaperDetails(firstList);
     }
     if (coList) {
       coList.innerHTML = co.map(({ p }) => paperEntry(p)).join("");
       bindCarousels(coList);
+      bindPaperDetails(coList);
     }
   }
 
