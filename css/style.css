@@ -51,6 +51,7 @@ img { max-width: 100%; }
 }
 .avatar-wrap {
   position: relative;
+  cursor: pointer;
 }
 .header-photo img {
   width: 100%;

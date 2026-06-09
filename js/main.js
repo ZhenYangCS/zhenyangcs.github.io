@@ -717,10 +717,13 @@
     var _avatarBtn  = document.getElementById("avatarToggle");
     var _avatarWrap = document.querySelector(".avatar-wrap");
     if (_avatarBtn && _avatarWrap) {
-      _avatarBtn.addEventListener("click", function () {
+      var toggleAvatar = function () {
         var young = _avatarWrap.classList.toggle("is-young");
         _avatarBtn.setAttribute("aria-pressed", young ? "true" : "false");
-      });
+      };
+      _avatarBtn.addEventListener("click", toggleAvatar);
+      // Clicking the avatar photo itself also toggles.
+      _avatarWrap.addEventListener("click", toggleAvatar);
     }
   });
 })();
