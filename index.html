@@ -175,9 +175,13 @@
 
 </div><!-- /#content -->
 
-<!-- ============ Visitors Globe (powered by Supabase) ============ -->
+<!-- ============ Visitors Map (powered by MapMyVisitors) ============ -->
 <section id="visitors">
   <div class="visitor-inner">
+    <!--
+      ============================================================
+      【Backup】 Supabase + globe.gl 3D globe (currently disabled)
+      ============================================================
     <div class="globe-panel" id="globePanel" hidden>
       <div id="globe-stage">
         <div id="globeViz"></div>
@@ -186,18 +190,9 @@
       <p class="globe-caption-stats" id="continentStats"></p>
       <div class="cont-cities" id="continentCities" hidden></div>
     </div>
+    -->
 
-    <!--
-      ============================================================
-      【Backup】 MapMyVisitors zero-config widget (currently disabled)
-      To switch from Supabase → MapMyVisitors:
-        1. Delete / hide the #globe-stage block above and the
-           .globe-caption / continent-stats paragraphs.
-        2. Uncomment the block below.
-        3. Optionally drop the 3 CDN scripts (supabase / globe.gl /
-           topojson) at the bottom — they will no longer be needed.
-      ============================================================
-
+    <div class="globe-panel" id="globePanel" hidden>
       <div class="mmv-frame">
         <script type="text/javascript" id="mapmyvisitors"
                 src="https://mapmyvisitors.com/map.js?d=rVWTWluWGdq-MuxnhqomD3VmfDk0x8OSeW8_S3gqAvw&cl=ffffff&w=a"></script>
@@ -207,9 +202,9 @@
           </a>
         </noscript>
       </div>
-    -->
+    </div>
   </div>
-  <button class="footer-line" id="globeToggle" type="button" aria-expanded="false" aria-controls="globePanel" aria-label="Toggle visitors globe">
+  <button class="footer-line" id="globeToggle" type="button" aria-expanded="false" aria-controls="globePanel" aria-label="Toggle visitors map">
     <span class="footer-tree">🌳</span>
     <span class="footer-name">Zhen Yang</span>
     <span class="footer-tree">🌳</span>
@@ -217,11 +212,13 @@
 </section>
 
 <!-- Scripts -->
+<!-- [Supabase + globe.gl CDN — currently disabled]
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script src="https://unpkg.com/globe.gl@2.32.6/dist/globe.gl.min.js"></script>
 <script src="https://unpkg.com/topojson-client@3"></script>
+-->
 <script src="js/papers.js?v=17"></script>
-<script src="js/main.js?v=31"></script>
+<script src="js/main.js?v=32"></script>
 </body>
 </html>
 

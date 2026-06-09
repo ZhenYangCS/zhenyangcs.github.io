@@ -691,21 +691,15 @@
     renderPapers();
     initTheme();
 
-    // 🌍 Lazy-load the globe only when the user clicks the toggle.
+    // 🌍 Toggle visitors panel (MapMyVisitors widget — no init needed).
     var _globeBtn   = document.getElementById("globeToggle");
     var _globePanel = document.getElementById("globePanel");
-    var _globeInited = false;
     if (_globeBtn && _globePanel) {
       _globeBtn.addEventListener("click", function () {
         var open = _globePanel.hasAttribute("hidden");
         if (open) {
           _globePanel.removeAttribute("hidden");
           _globeBtn.setAttribute("aria-expanded", "true");
-          if (!_globeInited) {
-            _globeInited = true;
-            // Wait one frame so the panel has real dimensions before three.js measures it.
-            requestAnimationFrame(initGlobe);
-          }
         } else {
           _globePanel.setAttribute("hidden", "");
           _globeBtn.setAttribute("aria-expanded", "false");
