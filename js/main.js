@@ -702,39 +702,19 @@
         if (open) {
           _globePanel.removeAttribute("hidden");
           _globeBtn.setAttribute("aria-expanded", "true");
-          // Lazy-inject the MapMyVisitors widget on first expand: it renders
-          // blank if its script runs while the container is still [hidden].
-          if (!_mmvInited) {
-            _mmvInited = true;
-            var frame = document.getElementById("mmvFrame");
-            if (frame) {
-              var s = document.createElement("script");
-              s.type = "text/javascript";
-              s.id = "mapmyvisitors";
-              s.src = "https://mapmyvisitors.com/map.js?d=rVWTWluWGdq-MuxnhqomD3VmfDk0x8OSeW8_S3gqAvw&cl=ffffff&w=a";
-              frame.appendChild(s);
-              // Fallback chain for slow / blocked networks: if the widget
-              // hasn't rendered in 6s, try the static map image; if even the
-              // image fails, degrade to a plain text link.
-              setTimeout(function () {
-                if (frame.querySelector("canvas, iframe, embed, object, img")) return;
-                var img = document.createElement("img");
-                img.src = "https://mapmyvisitors.com/map.png?d=rVWTWluWGdq-MuxnhqomD3VmfDk0x8OSeW8_S3gqAvw&cl=ffffff";
-                img.alt = "Visitor map";
-                img.onerror = function () {
-                  img.remove();
-                  var a = document.createElement("a");
-                  a.href = "https://mapmyvisitors.com/web/rVWTWluWGdq-MuxnhqomD3VmfDk0x8OSeW8_S3gqAvw";
-                  a.target = "_blank";
-                  a.rel = "noopener";
-                  a.className = "mmv-fallback-link";
-                  a.textContent = "\uD83C\uDF0D View visitor map";
-                  frame.appendChild(a);
-                };
-                frame.appendChild(img);
-              }, 6000);
-            }
-          }
+          // Flag Counter map is a plain <img> in the HTML — nothing to init.
+          // 【Backup】 MapMyVisitors lazy-injection (blocked by some CN networks):
+          // if (!_mmvInited) {
+          //   _mmvInited = true;
+          //   var frame = document.getElementById("mmvFrame");
+          //   if (frame) {
+          //     var s = document.createElement("script");
+          //     s.type = "text/javascript";
+          //     s.id = "mapmyvisitors";
+          //     s.src = "https://mapmyvisitors.com/map.js?d=rVWTWluWGdq-MuxnhqomD3VmfDk0x8OSeW8_S3gqAvw&cl=ffffff&w=a";
+          //     frame.appendChild(s);
+          //   }
+          // }
           // 【Backup】 Supabase globe disabled — MapMyVisitors widget renders
           // inside the panel on its own; no init needed. Re-enable to revive:
           // if (!_globeInited) {

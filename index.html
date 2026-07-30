@@ -175,24 +175,34 @@
 
 </div><!-- /#content -->
 
-<!-- ============ Visitors Map (powered by MapMyVisitors) ============ -->
+<!-- ============ Visitors Map (powered by Flag Counter) ============ -->
 <section id="visitors">
   <div class="visitor-inner">
     <div class="globe-panel" id="globePanel" hidden>
-      <!-- MapMyVisitors widget — injected lazily on first expand (see main.js).
-           Injecting while the panel is [hidden] makes it render blank, so the
-           script is added only after the panel becomes visible. -->
+      <!-- Flag Counter world map — plain <img>, no JS needed. The image
+           request itself is what counts the visit, so it lives directly in
+           the HTML (visitors are counted even with the panel collapsed).
+           Reachable from mainland China / corporate networks. -->
       <div class="mmv-frame" id="mmvFrame">
-        <noscript>
-          <a href="https://mapmyvisitors.com/web/rVWTWluWGdq-MuxnhqomD3VmfDk0x8OSeW8_S3gqAvw" target="_blank" rel="noopener">
-            <img src="https://mapmyvisitors.com/map.png?d=rVWTWluWGdq-MuxnhqomD3VmfDk0x8OSeW8_S3gqAvw&cl=ffffff" alt="Visitor map" />
-          </a>
-        </noscript>
+        <a href="https://info.flagcounter.com/x99F" target="_blank" rel="noopener" title="View visitor stats">
+          <img src="https://s01.flagcounter.com/map/x99F/size_m/txt_000000/border_CCCCCC/pageviews_1/viewers_0/flags_1/"
+               alt="Visitor map by Flag Counter" loading="eager" decoding="async" />
+        </a>
       </div>
 
       <!--
         ============================================================
-        【Backup】 Supabase + globe.gl visitors globe
+        【Backup 1】 MapMyVisitors widget (blocked by some CN networks)
+        <div class="mmv-frame" id="mmvFrame">
+          <noscript>
+            <a href="https://mapmyvisitors.com/web/rVWTWluWGdq-MuxnhqomD3VmfDk0x8OSeW8_S3gqAvw" target="_blank" rel="noopener">
+              <img src="https://mapmyvisitors.com/map.png?d=rVWTWluWGdq-MuxnhqomD3VmfDk0x8OSeW8_S3gqAvw&cl=ffffff" alt="Visitor map" />
+            </a>
+          </noscript>
+        </div>
+
+        ============================================================
+        【Backup 2】 Supabase + globe.gl visitors globe
         (disabled — Supabase project paused; keep code for revival)
         ============================================================
         <div id="globe-stage">
@@ -218,7 +228,7 @@
 <script src="https://unpkg.com/topojson-client@3"></script>
 -->
 <script src="js/papers.js?v=17"></script>
-<script src="js/main.js?v=35"></script>
+<script src="js/main.js?v=36"></script>
 </body>
 </html>
 

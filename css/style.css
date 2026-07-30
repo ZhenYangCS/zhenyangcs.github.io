@@ -728,12 +728,12 @@ img { max-width: 100%; }
   border-color: rgba(0, 0, 0, .12);
 }
 
-/* ----------- MapMyVisitors widget frame (kept for the backup widget) ----------- */
+/* ----------- Visitor map frame (Flag Counter world map) ----------- */
 .mmv-frame {
   display: flex;
   justify-content: center;
   align-items: center;
-  max-width: 300px;
+  max-width: 480px;
   margin: 0 auto;
   padding: 10px 0;
 }
@@ -742,6 +742,8 @@ img { max-width: 100%; }
 .mmv-frame iframe {
   max-width: 100%;
   height: auto;
+  border-radius: 6px;
+  box-shadow: 0 2px 14px rgba(0, 0, 0, .4);
 }
 /* Text link fallback when both the widget and the static image fail. */
 .mmv-fallback-link {
