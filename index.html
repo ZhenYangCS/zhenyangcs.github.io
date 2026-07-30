@@ -175,32 +175,34 @@
 
 </div><!-- /#content -->
 
-<!-- ============ Visitors Globe (powered by Supabase) ============ -->
+<!-- ============ Visitors Map (powered by MapMyVisitors) ============ -->
 <section id="visitors">
   <div class="visitor-inner">
     <div class="globe-panel" id="globePanel" hidden>
-      <div id="globe-stage">
-        <div id="globeViz"></div>
-      </div>
-      <p class="globe-caption"><span id="visitorCount">·</span> visitors across <span id="continentCount">·</span> continents</p>
-      <p class="globe-caption-stats" id="continentStats"></p>
-      <div class="cont-cities" id="continentCities" hidden></div>
-    </div>
-
-    <!--
-      ============================================================
-      【Backup】 MapMyVisitors zero-config widget (currently disabled)
-      ============================================================
-      <div class="mmv-frame">
-        <script type="text/javascript" id="mapmyvisitors"
-                src="https://mapmyvisitors.com/map.js?d=rVWTWluWGdq-MuxnhqomD3VmfDk0x8OSeW8_S3gqAvw&cl=ffffff&w=a"></script>
+      <!-- MapMyVisitors widget — injected lazily on first expand (see main.js).
+           Injecting while the panel is [hidden] makes it render blank, so the
+           script is added only after the panel becomes visible. -->
+      <div class="mmv-frame" id="mmvFrame">
         <noscript>
           <a href="https://mapmyvisitors.com/web/rVWTWluWGdq-MuxnhqomD3VmfDk0x8OSeW8_S3gqAvw" target="_blank" rel="noopener">
             <img src="https://mapmyvisitors.com/map.png?d=rVWTWluWGdq-MuxnhqomD3VmfDk0x8OSeW8_S3gqAvw&cl=ffffff" alt="Visitor map" />
           </a>
         </noscript>
       </div>
-    -->
+
+      <!--
+        ============================================================
+        【Backup】 Supabase + globe.gl visitors globe
+        (disabled — Supabase project paused; keep code for revival)
+        ============================================================
+        <div id="globe-stage">
+          <div id="globeViz"></div>
+        </div>
+        <p class="globe-caption"><span id="visitorCount">·</span> visitors across <span id="continentCount">·</span> continents</p>
+        <p class="globe-caption-stats" id="continentStats"></p>
+        <div class="cont-cities" id="continentCities" hidden></div>
+      -->
+    </div>
   </div>
   <button class="footer-line" id="globeToggle" type="button" aria-expanded="false" aria-controls="globePanel" aria-label="Toggle visitors globe">
     <span class="footer-tree">🌳</span>
@@ -210,11 +212,13 @@
 </section>
 
 <!-- Scripts -->
+<!-- 【Backup】 Supabase globe dependencies (disabled with the globe above)
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script src="https://unpkg.com/globe.gl@2.32.6/dist/globe.gl.min.js"></script>
 <script src="https://unpkg.com/topojson-client@3"></script>
+-->
 <script src="js/papers.js?v=17"></script>
-<script src="js/main.js?v=33"></script>
+<script src="js/main.js?v=35"></script>
 </body>
 </html>
 

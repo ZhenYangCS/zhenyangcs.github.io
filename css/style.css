@@ -743,6 +743,20 @@ img { max-width: 100%; }
   max-width: 100%;
   height: auto;
 }
+/* Text link fallback when both the widget and the static image fail. */
+.mmv-fallback-link {
+  font: 12px Georgia, serif;
+  color: rgba(255, 255, 255, .55);
+  padding: 6px 14px;
+  border: 1px solid rgba(255, 255, 255, .15);
+  border-radius: 999px;
+  text-decoration: none;
+}
+.mmv-fallback-link:hover { color: rgba(255, 255, 255, .9); }
+[data-theme="light"] .mmv-fallback-link {
+  color: rgba(31, 35, 40, .6);
+  border-color: rgba(31, 35, 40, .2);
+}
 
 .footer-line {
   display: flex;
