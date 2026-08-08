@@ -25,7 +25,7 @@
     })();
   </script>
   <link rel="preload" as="image" href="images/avatar.webp" fetchpriority="high" />
-  <link rel="stylesheet" href="css/style.css?v=19" />
+  <link rel="stylesheet" href="css/style.css?v=20" />
 </head>
 <body>
 
@@ -111,8 +111,12 @@
   <h3 class="pub-group-title">First-Author Publications</h3>
   <div id="first-author-list"></div>
 
-  <h3 class="pub-group-title">Co-Authored Publications</h3>
-  <div id="co-author-list"></div>
+  <h3 class="pub-group-title pub-group-collapsible">
+    <button class="pub-group-toggle" id="coAuthorToggle" type="button" aria-expanded="false" aria-controls="co-author-list">
+      Selected Co-Authored Publications <span class="toggle-arrow">▾</span>
+    </button>
+  </h3>
+  <div id="co-author-list" hidden></div>
 
   <!-- ============ Academic Service ============ -->
   <h2>Industry Experience</h2>
@@ -228,7 +232,7 @@
 <script src="https://unpkg.com/topojson-client@3"></script>
 -->
 <script src="js/papers.js?v=17"></script>
-<script src="js/main.js?v=36"></script>
+<script src="js/main.js?v=37"></script>
 </body>
 </html>
 

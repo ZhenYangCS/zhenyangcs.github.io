@@ -175,6 +175,29 @@ img { max-width: 100%; }
   font-weight: 400;
 }
 
+/* Collapsible group header (Co-Authored, hidden by default) */
+.pub-group-toggle {
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  border: none;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.pub-group-toggle:hover { color: #4ade80; }
+.pub-group-toggle .toggle-arrow {
+  display: inline-block;
+  font-size: 0.8em;
+  color: #8b949e;
+  transition: transform 0.25s ease;
+  vertical-align: 1px;
+}
+.pub-group-toggle[aria-expanded="true"] .toggle-arrow { transform: rotate(180deg); }
+[data-theme="light"] .pub-group-toggle:hover { color: #16a34a; }
+[data-theme="light"] .pub-group-toggle .toggle-arrow { color: #6e7781; }
+
 #content p {
   margin: 0 0 12px 0;
   text-align: justify;

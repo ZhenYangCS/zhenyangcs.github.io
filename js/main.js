@@ -224,6 +224,19 @@
     }
   }
 
+  // Co-authored group is collapsed by default; the header toggles it.
+  function initCoAuthorToggle() {
+    const btn  = document.getElementById("coAuthorToggle");
+    const list = document.getElementById("co-author-list");
+    if (!btn || !list) return;
+    btn.addEventListener("click", () => {
+      const willOpen = list.hasAttribute("hidden");
+      if (willOpen) list.removeAttribute("hidden");
+      else list.setAttribute("hidden", "");
+      btn.setAttribute("aria-expanded", willOpen ? "true" : "false");
+    });
+  }
+
   // ----- Theme toggle ------------------------------------------------------
   // Default = dark. Click flips to light. Choice persists in localStorage.
   // The globe is re-rendered with theme-specific texture & lighting on toggle.
@@ -689,6 +702,7 @@
 
   document.addEventListener("DOMContentLoaded", function () {
     renderPapers();
+    initCoAuthorToggle();
     initTheme();
 
     // 🌍 Lazy-load the globe only when the user clicks the toggle.
