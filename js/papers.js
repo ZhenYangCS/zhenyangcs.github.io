@@ -13,7 +13,7 @@ window.PAPERS = [
       { name: "Zhen Yang", me: true },
       "Xiaogang Xu", "Wen Wang", "Cong Chen", "Xander Xu", "Ying-Cong Chen"
     ],
-    venue: "arXiv",
+    venue: "EMNLP 2026",
     year: 2026,
     links: {
       arxiv: "https://arxiv.org/abs/2606.05158",
@@ -334,7 +334,7 @@ window.PAPERS = [
       { name: "Zhen Yang", me: true },
       "Guangming Yao", "Hao Chen", "Jingdong Chen", "Yi Yuan", "Chunhua Shen"
     ],
-    venue: "arXiv 2026",
+    venue: "EMNLP 2026",
     year: 2026,
     links: {
       arxiv: "https://arxiv.org/abs/2606.07512",
