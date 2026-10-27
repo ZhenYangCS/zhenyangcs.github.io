@@ -8,6 +8,33 @@
 
 window.PAPERS = [
   {
+    title: "Can LLMs Uncover Hidden Physical Laws through Free Exploration?",
+    authors: [
+      { name: "Zhen Yang", me: true },
+      "Wen Wang", "Xander Xu", "Ying-Cong Chen"
+    ],
+    venue: "Preprint 2026",
+    year: 2026,
+    links: {
+      arxiv: "https://github.com/EnVision-Research/LongChang",
+      code: "https://github.com/EnVision-Research/LongChang",
+      page: "https://zhenyangcs.github.io/LongChang-website/",
+    },
+    tags: ["LLM Agents", "Scientific Discovery", "Free Exploration"],
+    abbr: "LongChang",
+    thumbs: [
+      "images/papers/longchang/01.webp"
+    ],
+    description: "LongChang lets LLMs freely explore simulated worlds with altered physics and build tools to uncover hidden physical laws.",
+    tldr: "Can LLMs choose their own questions and discover hidden physical laws? LongChang lets them manipulate objects and build instruments in simulated worlds, with no assigned research tasks or hints about the altered laws.",
+    bibtex: `@misc{yang2026longchang,
+  title={Can LLMs Uncover Hidden Physical Laws through Free Exploration?},
+  author={Yang, Zhen and Wang, Wen and Xu, Xander and Chen, Ying-Cong},
+  year={2026},
+  url={https://zhenyangcs.github.io/LongChang-website/}
+}`
+  },
+  {
     title: "Streaming Communication in Multi-Agent Reasoning",
     authors: [
       { name: "Zhen Yang", me: true },
