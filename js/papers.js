@@ -26,7 +26,7 @@ window.PAPERS = [
       "images/papers/longchang/01.webp"
     ],
     description: "LongChang lets LLMs freely explore simulated worlds with altered physics and build tools to uncover hidden physical laws.",
-    tldr: "LongChang explores whether LLMs can uncover hidden physical laws by asking their own questions and designing their own experiments.",
+    tldr: "LongChang explores whether LLMs can autonomously discover hidden physical laws.",
     bibtex: `@article{yang2026longchang,
   title={Can LLMs Uncover Hidden Physical Laws through Free Exploration?},
   author={Yang, Zhen and Wang, Wen and Xu, Xander and Chen, Ying-Cong},
