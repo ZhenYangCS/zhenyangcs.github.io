@@ -20,7 +20,7 @@ window.PAPERS = [
       code: "https://github.com/EnVision-Research/LongChang",
       page: "https://zhenyangcs.github.io/LongChang-website/",
     },
-    tags: ["LLM Agents", "Scientific Discovery", "Free Exploration"],
+    tags: ["Scientific Discovery", "Free Exploration", "LLM Agents"],
     abbr: "LongChang",
     thumbs: [
       "images/papers/longchang/01.webp"
