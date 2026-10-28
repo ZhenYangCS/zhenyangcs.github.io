@@ -16,7 +16,7 @@ window.PAPERS = [
     venue: "Preprint 2026",
     year: 2026,
     links: {
-      arxiv: "https://zhenyangcs.github.io/LongChang-website/",
+      arxiv: "https://arxiv.org/abs/2610.37649",
       code: "https://github.com/EnVision-Research/LongChang",
       page: "https://zhenyangcs.github.io/LongChang-website/",
     },
