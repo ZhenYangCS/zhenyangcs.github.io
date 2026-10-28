@@ -40,7 +40,7 @@ window.PAPERS = [
       { name: "Zhen Yang", me: true },
       "Xiaogang Xu", "Wen Wang", "Cong Chen", "Xander Xu", "Ying-Cong Chen"
     ],
-    venue: "EMNLP 2026 (🏆 Oral + Award Candidates)",
+    venue: "EMNLP 2026 (🏆 Oral + Award Nomination)",
     year: 2026,
     links: {
       arxiv: "https://arxiv.org/abs/2606.05158",
