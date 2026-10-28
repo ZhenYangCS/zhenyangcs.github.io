@@ -58,7 +58,7 @@
     }
 
     const authors = (p.authors || []).map(authorHTML).join(", ");
-    const venue = p.venue ? `${p.venue}.` : `${p.year}.`;
+    const venue = `${p.venue || p.year}${p.venueIcon ? ` ${escapeHTML(p.venueIcon)}` : "."}`;
 
     // Collapsible details: TLDR (uses p.tldr) + BibTeX (uses p.bibtex)
     const tldrId = `tldr-${++_paperUid}`;

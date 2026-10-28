@@ -2,7 +2,7 @@
 //  Publication data for Zhen Yang
 //  Update this file whenever a new paper is added.
 //  Each entry supports: title, authors (array of {name, me?, equal?}),
-//  venue, year, links {arxiv, code, page, pdf, hf}, thumbs (array of
+//  venue, venueIcon (optional), year, links {arxiv, code, page, pdf, hf}, thumbs (array of
 //  image paths -> rendered as a carousel), abbr, tags, description.
 // =====================================================================
 
@@ -41,6 +41,7 @@ window.PAPERS = [
       "Xiaogang Xu", "Wen Wang", "Cong Chen", "Xander Xu", "Ying-Cong Chen"
     ],
     venue: "EMNLP 2026 (Oral + Award Candidates)",
+    venueIcon: "🏆",
     year: 2026,
     links: {
       arxiv: "https://arxiv.org/abs/2606.05158",
