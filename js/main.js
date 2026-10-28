@@ -79,7 +79,7 @@
         <div class="paper-info">
           <p class="paper-title">${p.title}</p>
           <p class="paper-authors">${authors}</p>
-          <p class="paper-venue">${venue} ${(p.tags || []).map(t => `<span class="ptag">${t}</span>`).join("")}</p>
+          <p class="paper-venue">${venue}</p>
           <p class="paper-links">${linkParts.join(" ")}</p>
           ${details.join("")}
         </div>
