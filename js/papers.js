@@ -30,7 +30,7 @@ window.PAPERS = [
     bibtex: `@article{yang2026longchang,
   title={Can LLMs Uncover Hidden Physical Laws through Free Exploration?},
   author={Yang, Zhen and Wang, Wen and Xu, Xander and Chen, Ying-Cong},
-  journal={arXiv preprint arXiv:xxx},
+  journal={arXiv preprint arXiv:2610.37649},
   year={2026}
 }`
   },
